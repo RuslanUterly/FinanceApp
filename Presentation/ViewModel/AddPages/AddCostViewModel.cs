@@ -18,22 +18,11 @@ public class AddCostViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
     public event Action CostAdded; 
 
-    //private readonly Icon _icon;
-    //private readonly IColorUpdater _colorUpdater; 
-    //private readonly DateTime _date;
-    //private readonly IFinanceRepository _financeRepository;
     private readonly IFinanceBuilder _financeBuilder;
     private readonly IIconBuilder _iconBuilder;
 
-    //private Categoria? previousSelectedItem;
-    //private Categoria? selectedItem;
-
     public AddCostViewModel(DateTime date, IFinanceRepository financeRepository)
     {
-        //_icon = new Icon();
-        //_colorUpdater = new ColorUpdater();
-        //_date = date;
-        //_financeRepository = financeRepository;
         _financeBuilder = new FinanceBuilder(date, financeRepository);
         _iconBuilder = new IconBuilder();
 
@@ -59,23 +48,12 @@ public class AddCostViewModel : INotifyPropertyChanged
     {
         if (sender is Categoria selectedItem)
         {
-            //this.selectedItem = new Categoria(selectedItem.Name, selectedItem.Icon, selectedItem.Color);
-
-            //await _colorUpdater.UpdateColor(IconCosts, selectedItem);
-            //await _colorUpdater.UpdateColor(IconCosts, previousSelectedItem!);
-
-            //previousSelectedItem = selectedItem;
-
             await _iconBuilder.ChangeAsync(selectedItem, IconCosts);
         }
     }
 
     private async void OnCostCreate(string sum)
     {
-        //if (sum == null && selectedItem == null)
-        //    return;
-
-        //await _financeRepository.Create(Mode.cost, Convert.ToDecimal(sum), selectedItem!, _date);
         await _financeBuilder.CreateAsync(Mode.cost, sum, _iconBuilder.SelectedItem);
 
         CostAdded?.Invoke();
