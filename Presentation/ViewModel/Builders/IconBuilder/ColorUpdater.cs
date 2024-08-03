@@ -1,6 +1,5 @@
 ﻿using Model.DataModel;
 using Model.IconModel;
-using Presentation.Model.IconModel;
 using Presentation.ViewModel.Builders.IconBuilder.Interfaces;
 using System.Collections.ObjectModel;
 

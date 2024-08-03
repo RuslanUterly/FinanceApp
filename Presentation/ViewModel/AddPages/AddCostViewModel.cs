@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Model.IconModel;
 using Model.DataModel;
 using Data.Interfaces;
 using Model.Enum;

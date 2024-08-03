@@ -1,5 +1,3 @@
-using Data.Interfaces;
-using Presentation.Model;
 using Presentation.ViewModel.AddPages;
 
 namespace Presentation.View.AddPages;

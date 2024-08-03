@@ -1,12 +1,7 @@
 ﻿using Data.Interfaces;
-using Microsoft.Extensions.Primitives;
 using Model.DataModel;
 using Model.Enum;
-using Model.IconModel;
 using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
-using Presentation.ViewModel.Builders.IconBuilder;
-using Presentation.ViewModel.Builders.IconBuilder.Interfaces;
-using System.Collections.ObjectModel;
 
 namespace Presentation.ViewModel.Builders.FinanceBuilder;
 
