@@ -28,26 +28,3 @@ public class ViewBuilder()
 {
     public async void OnClosePage() => await Application.Current!.MainPage!.Navigation.PopModalAsync();
 }
-
-public class IconBuilder : IIconBuilder
-{
-    public IconBuilder()
-    {
-        Icon = new Icon();
-        ColorUpdater = new ColorUpdater();
-    }
-    public Icon Icon {  get; set; }
-    public IColorUpdater ColorUpdater {  get; private set; }
-    public Categoria? PreviousSelectedItem {  get; private set; }
-    public Categoria? SelectedItem { get; private set; }
-
-    public async Task ChangeAsync(Categoria item, ObservableCollection<Categoria> IconCosts)
-    {
-        SelectedItem = new Categoria(item.Name, item.Icon, item.Color);
-
-        await ColorUpdater.UpdateColor(IconCosts, item);
-        await ColorUpdater.UpdateColor(IconCosts, PreviousSelectedItem!);
-
-        PreviousSelectedItem = item;
-    }
-}
