@@ -1,0 +1,14 @@
+<svg width="112.000000" height="112.000000" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip23_100">
+			<rect id="bank-card-fill" width="111.110001" height="111.110001" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<rect id="bank-card-fill" width="111.110001" height="111.110001" fill="#FFFFFF" fill-opacity="0"/>
+	<g clip-path="url(#clip23_100)">
+		<path id="矢量 132" d="M97.78 46.17L97.78 93.08C97.78 94.33 97.33 95.52 96.54 96.4C95.75 97.28 94.67 97.78 93.55 97.78L17.55 97.78C16.43 97.78 15.35 97.28 14.56 96.4C13.77 95.52 13.33 94.33 13.33 93.08L13.33 46.17L97.78 46.17ZM97.78 36.78L13.33 36.78L13.33 18.02C13.33 16.77 13.77 15.58 14.56 14.7C15.35 13.82 16.43 13.33 17.55 13.33L93.55 13.33C94.67 13.33 95.75 13.82 96.54 14.7C97.33 15.58 97.78 16.77 97.78 18.02L97.78 36.78ZM68.22 74.32L68.22 83.7L85.11 83.7L85.11 74.32L68.22 74.32Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+	</g>
+</svg>

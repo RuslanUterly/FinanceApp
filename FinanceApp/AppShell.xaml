@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="FinanceApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FinanceApp"
+    xmlns:presentation="clr-namespace:Presentation.View;assembly=Presentation"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Title="FinanceApp">
+
+    <TabBar>
+        <Tab Icon="home" Title="Дом">
+            <ShellContent Title="Расходы" ContentTemplate="{DataTemplate presentation:MainCostsView}"/>
+            <ShellContent Title="Доходы" ContentTemplate="{DataTemplate presentation:MainProfitView}"/>
+        </Tab>
+        <Tab Icon="stati" Title="Статистика">
+            <ShellContent ContentTemplate="{DataTemplate presentation:MainCostsView}"/>
+        </Tab>
+    </TabBar>
+
+</Shell>
