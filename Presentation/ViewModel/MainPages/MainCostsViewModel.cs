@@ -17,7 +17,7 @@ public class MainCostsViewModel : INotifyPropertyChanged
     private readonly IFinanceRepository _financeRepository;
     //private readonly IChangeRepository _changeRepository;
     private ObservableCollection<Element>? elements;
-    private int elementsSum;
+    private decimal elementsSum;
     private DateTime _date;
 
     public MainCostsViewModel()
@@ -49,7 +49,7 @@ public class MainCostsViewModel : INotifyPropertyChanged
         }
     }
 
-    public int ElementsSum
+    public decimal ElementsSum
     {
         get => elementsSum;
         set
@@ -86,6 +86,7 @@ public class MainCostsViewModel : INotifyPropertyChanged
     private async void UpdateElements()
     {
         Elements = await _financeRepository.GetAll(_date, Mode.cost);
+        ElementsSum = await _financeRepository.GetSum(_date, Mode.cost);
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

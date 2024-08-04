@@ -77,4 +77,11 @@ public class FinanceRepository(DataFinanceContext finance) : IFinanceRepository
     {
         throw new NotImplementedException();
     }
+
+    public Task<decimal> GetSum(DateTime date, Mode mode)
+    {
+        return Task.FromResult(_finances.Finance.Where(f => f.DateTime.Date == date.Date)
+                                                .Sum(f => f.Elements.Where(e => e.Mode == mode)
+                                                                    .Sum(e => e.Sum)));
+    }
 }
