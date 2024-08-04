@@ -21,10 +21,11 @@ public class MainCostsViewModel : INotifyPropertyChanged
 
     public MainCostsViewModel()
     {
-        var serviceProvider = Build.GetServiceProvider();
-        _financeRepository = Build.GetFinanceService(serviceProvider);
+        //var serviceProvider = Build.GetServiceProvider();
         //_changeRepository = Build.GetChangeService(serviceProvider);
         //_changeRepository.ChangeElement += UpdateElements;
+
+        _financeRepository = Build.GetFinanceService();
 
         DateChangedCommand = new Command<DateTime>(OnDateChanged);
         OpenPageCommand = new Command(OnOpenPage);
