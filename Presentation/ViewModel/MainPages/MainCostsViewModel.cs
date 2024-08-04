@@ -15,17 +15,12 @@ public class MainCostsViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly IFinanceRepository _financeRepository;
-    //private readonly IChangeRepository _changeRepository;
     private ObservableCollection<Element>? elements;
     private string elementsSum;
     private DateTime _date;
 
     public MainCostsViewModel()
     {
-        //var serviceProvider = Build.GetServiceProvider();
-        //_changeRepository = Build.GetChangeService(serviceProvider);
-        //_changeRepository.ChangeElement += UpdateElements;
-
         _financeRepository = Build.GetFinanceService();
 
         DateChangedCommand = new Command<DateTime>(OnDateChanged);
