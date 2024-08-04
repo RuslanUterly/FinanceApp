@@ -11,8 +11,9 @@ public class Icon
         new Categoria("ЖКХ",       "jkh.svg",        "#AC94C0"),
         new Categoria("Одежда",    "close.svg",      "#949CC0"),
         new Categoria("Услуги",    "services.svg",   "#C09494"),
-        new Categoria("Рестораны", "other.svg",      "#94C0BE"),
+        new Categoria("Рестораны", "rest.svg",       "#94C0BE"),
         new Categoria("Здоровье",  "health.svg",     "#C094C0"),
+        new Categoria("Транспорт", "car.svg",        "#A6C094"),
         new Categoria("Прочее",    "other.svg",      "#94B2C0"),
     };
 
