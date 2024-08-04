@@ -1,6 +1,8 @@
-﻿using Model.DataModel;
-using Model.IconModel;
-using Presentation.Model.IconModel;
+﻿using Data.Interfaces;
+using Model.DataModel;
+using Model.Enum;
+using Presentation.ViewModel.Builders.FinanceBuilder;
+using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
 using Presentation.ViewModel.Builders.IconBuilder;
 using Presentation.ViewModel.Builders.IconBuilder.Interfaces;
 using System.Collections.ObjectModel;
@@ -13,43 +15,51 @@ namespace Presentation.ViewModel.AddPages;
 class AddProfitViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
+    //public event Action CostAdded;
 
-    private readonly Icon _icon;
-    private readonly IColorUpdater _colorUpdater;
-    private Categoria? previousSelectedItem;
+    //private readonly IFinanceBuilder _financeBuilder;
+    //private readonly IIconBuilder _iconBuilder;
 
-    public AddProfitViewModel()
-    {
-        _icon = new Icon();
-        _colorUpdater = new ColorUpdater();
-        SelectionChangedCommand = new Command(OnSelectionChanged);
-    }
+    //public AddProfitViewModel(DateTime date, IFinanceRepository financeRepository)
+    //{
+    //    _financeBuilder = new FinanceBuilder(date, financeRepository);
+    //    _iconBuilder = new IconBuilder();
 
-    public ObservableCollection<Categoria> IconProfit
-    {
-        get => _icon.IconProfit;
-        set
-        {
-            _icon.IconProfit = value;
-            OnPropertyChanged();
-        }
-    }
-    public ICommand SelectionChangedCommand { get; }
+    //    SelectionChangedCommand = new Command(OnSelectionChanged);
+    //    CostCreateCommand = new Command<string>(OnCostCreate);
+    //    ClosePageCommand = new Command(OnClosePage);
+    //}
 
-    private void OnSelectionChanged(object? sender)
-    {
-        if (sender is Categoria selectedItem)
-        {
-            _colorUpdater.UpdateColor(IconProfit, selectedItem);
-            _colorUpdater.UpdateColor(IconProfit, previousSelectedItem);
-            previousSelectedItem = selectedItem;
+    //public ObservableCollection<Categoria> IconProfits
+    //{
+    //    get => _iconBuilder.Icon.IconProfit;
+    //    set
+    //    {
+    //        _iconBuilder.Icon.IconProfit = value;
+    //        OnPropertyChanged();
+    //    }
+    //}
+    //public ICommand SelectionChangedCommand { get; }
+    //public ICommand CostCreateCommand { get; }
+    //public ICommand ClosePageCommand { get; }
 
-            OnPropertyChanged();
-        }
-    }
+    //private async void OnSelectionChanged(object? sender)
+    //{
+    //    if (sender is Categoria selectedItem)
+    //    {
+    //        await _iconBuilder.ChangeAsync(selectedItem, IconProfits);
+    //    }
+    //}
 
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-    }
+    //private async void OnCostCreate(string sum)
+    //{
+    //    await _financeBuilder.CreateAsync(Mode.profit, sum, _iconBuilder.SelectedItem);
+
+    //    CostAdded?.Invoke();
+    //    OnClosePage();
+    //}
+
+    //private async void OnClosePage() => await Application.Current!.MainPage!.Navigation.PopModalAsync();
+
+    //public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 }
