@@ -17,6 +17,7 @@ public class MainCostsViewModel : INotifyPropertyChanged
     private readonly IFinanceRepository _financeRepository;
     //private readonly IChangeRepository _changeRepository;
     private ObservableCollection<Element>? elements;
+    private int elementsSum;
     private DateTime _date;
 
     public MainCostsViewModel()
@@ -48,6 +49,16 @@ public class MainCostsViewModel : INotifyPropertyChanged
         }
     }
 
+    public int ElementsSum
+    {
+        get => elementsSum;
+        set
+        {
+            elementsSum = value; 
+            OnPropertyChanged(); 
+        }
+    }
+
     public ICommand OpenPageCommand { get; }
     public ICommand DateChangedCommand { get; }
     public ICommand DeleteCostCommand { get; }
@@ -72,7 +83,10 @@ public class MainCostsViewModel : INotifyPropertyChanged
         _financeRepository.Delete(_date, element);
         UpdateElements();
     }
-    private async void UpdateElements() => Elements = await _financeRepository.GetAll(_date, Mode.cost);
+    private async void UpdateElements()
+    {
+        Elements = await _financeRepository.GetAll(_date, Mode.cost);
+    }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 }
