@@ -4,6 +4,8 @@ using Model.Enum;
 using Presentation.View.AddPages;
 using Presentation.ViewModel.AddPages;
 using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
+using Presentation.ViewModel.Builders.PageBuilder;
+using Presentation.ViewModel.Builders.PageBuilder.Interface;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.Builders.FinanceBuilder;
@@ -25,11 +27,6 @@ public class CreateFinanceBuilder(DateTime date, IFinanceRepository financeRepos
     }
 }
 
-public static class ViewBuilder
-{
-    public static async void OnClosePage() => await Application.Current!.MainPage!.Navigation.PopModalAsync();
-}
-
 public abstract class DateSynchronize
 {
     protected IFinanceViewModel _viewModel;
@@ -43,7 +40,8 @@ public abstract class DateSynchronize
 
 
 public class DeleteFinanceBuilder(DateTime date, IFinanceRepository financeRepository, IFinanceViewModel viewModel) 
-    : DateSynchronize(ref date, ref financeRepository, ref viewModel)
+    : DateSynchronize(ref date, ref financeRepository, ref viewModel),
+    IDeleteFinanceBuilder
 {
     public event Action? UpdateElements;
     
@@ -58,7 +56,8 @@ public class DeleteFinanceBuilder(DateTime date, IFinanceRepository financeRepos
 }
 
 public class DateChangeBuilder(DateTime date, IFinanceRepository financeRepository, IFinanceViewModel viewModel)
-    : DateSynchronize(ref date, ref financeRepository, ref viewModel)
+    : DateSynchronize(ref date, ref financeRepository, ref viewModel),
+    IDateChangeBuilder
 {
     public event Action? UpdateElements;
 
@@ -74,7 +73,8 @@ public class DateChangeBuilder(DateTime date, IFinanceRepository financeReposito
 }
 
 public class OpenPageBuilder(DateTime date, IFinanceRepository financeRepository, IFinanceViewModel viewModel)
-    : DateSynchronize(ref date, ref financeRepository, ref viewModel)
+    : DateSynchronize(ref date, ref financeRepository, ref viewModel),
+    IOpenPageBuilder
 {
     public IFinanceViewModel _viewModel => viewModel;
 

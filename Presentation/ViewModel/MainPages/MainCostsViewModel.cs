@@ -7,6 +7,8 @@ using Model.Enum;
 using Presentation.View.AddPages;
 using Presentation.ViewModel.AddPages;
 using Presentation.ViewModel.Builders.FinanceBuilder;
+using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
+using Presentation.ViewModel.Builders.PageBuilder.Interface;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel;
@@ -21,9 +23,9 @@ public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private readonly DeleteFinanceBuilder _deleteFinance;
-    private readonly DateChangeBuilder _dateChange;
-    private readonly OpenPageBuilder _openPage;
+    private readonly IDeleteFinanceBuilder _deleteFinance;
+    private readonly IDateChangeBuilder _dateChange;
+    private readonly IOpenPageBuilder _openPage;
 
     private ObservableCollection<Element>? elements;
     private string? elementsSum;
