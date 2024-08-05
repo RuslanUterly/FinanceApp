@@ -25,19 +25,11 @@ public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
     private readonly DateChangeBuilder _dateChange;
     private readonly OpenPageBuilder _openPage;
 
-    //private readonly IFinanceRepository _financeRepository;
     private ObservableCollection<Element>? elements;
     private string? elementsSum;
-    //public DateTime _date;
 
     public MainCostsViewModel(DateTime date, IFinanceRepository financeRepository)
     {
-        //_financeRepository = financeRepository;
-        //_date = date;
-        //DateChangedCommand = new Command<DateTime>(OnDateChanged);
-        //OpenPageCommand = new Command(OnOpenPage);
-        //DeleteCostCommand = new Command<Element>(OnDeleteCost);
-
         _deleteFinance = new DeleteFinanceBuilder(date, financeRepository, this);
         _dateChange = new DateChangeBuilder(date, financeRepository, this);
         _openPage = new OpenPageBuilder(date, financeRepository, this);
@@ -79,31 +71,8 @@ public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
     public ICommand DateChangedCommand { get; }
     public ICommand DeleteCostCommand { get; }
 
-    //private async void OnOpenPage()
-    //{
-    //    var addCostViewModel = new AddCostViewModel(_date, _financeRepository);
-    //    // Подписка на событие
-    //    addCostViewModel.CostAdded += UpdateElements;
-
-    //    await Application.Current!.MainPage!.Navigation.PushModalAsync(new AddCostView(addCostViewModel));
-    //}
-
-    //private void OnDateChanged(DateTime newDate)
-    //{
-    //    _date = newDate;
-    //    UpdateElements();
-    //}
-
-    //private async void OnDeleteCost(Element? element)
-    //{
-    //    await _financeRepository.Delete(_date, element!);
-    //    UpdateElements();
-    //}
     private async void UpdateElements()
     {
-        //Elements = await _financeRepository.GetAll(_date, Mode.cost);
-        //ElementsSum = $"{await _financeRepository.GetSum(_date, Mode.cost)} руб.";
-
         Elements = await FinanceRepository.GetAll(Date, Mode.cost);
         ElementsSum = $"{await FinanceRepository.GetSum(Date, Mode.cost)} руб.";
     }

@@ -9,5 +9,5 @@ public interface IIconBuilder
     Icon Icon { get; set; }
     Categoria? PreviousSelectedItem { get; }
     Categoria? SelectedItem { get; }
-    Task ChangeAsync(Categoria item, ObservableCollection<Categoria> IconCosts);
+    Task ChangeAsync(object sender, ObservableCollection<Categoria> IconCosts);
 }

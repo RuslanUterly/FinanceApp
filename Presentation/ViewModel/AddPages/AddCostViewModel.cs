@@ -25,9 +25,9 @@ public class AddCostViewModel : INotifyPropertyChanged
         _financeBuilder = new CreateFinanceBuilder(date, financeRepository);
         _iconBuilder = new IconBuilder();
 
-        SelectionChangedCommand = new Command(OnSelectionChanged);
-        CostCreateCommand = new Command<string>(OnCostCreate);
-        ClosePageCommand = new Command(OnClosePage);
+        SelectionChangedCommand = new Command(async sender => await _iconBuilder.ChangeAsync(sender, IconCosts));
+        CostCreateCommand = new Command<string>(async sum => await _financeBuilder.CreateAsync(Mode.cost, sum, _iconBuilder.SelectedItem, CostAdded));
+        ClosePageCommand = new Command(ViewBuilder.OnClosePage);
     }
 
     public ObservableCollection<Categoria> IconCosts
@@ -42,24 +42,6 @@ public class AddCostViewModel : INotifyPropertyChanged
     public ICommand SelectionChangedCommand { get; }
     public ICommand CostCreateCommand { get; }
     public ICommand ClosePageCommand { get; }
-
-    private async void OnSelectionChanged(object? sender)
-    {
-        if (sender is Categoria selectedItem)
-        {
-            await _iconBuilder.ChangeAsync(selectedItem, IconCosts);
-        }
-    }
-
-    private async void OnCostCreate(string sum)
-    {
-        await _financeBuilder.CreateAsync(Mode.cost, sum, _iconBuilder.SelectedItem);
-
-        CostAdded?.Invoke();
-        OnClosePage();
-    }
-
-    private async void OnClosePage() => await Application.Current!.MainPage!.Navigation.PopModalAsync();
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
 }

@@ -1,14 +1,9 @@
 ﻿using Data.Interfaces;
-using Data.Repository;
 using Model.DataModel;
 using Model.Enum;
 using Presentation.View.AddPages;
 using Presentation.ViewModel.AddPages;
 using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
-using Syncfusion.Maui.Core.Carousel;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.Builders.FinanceBuilder;
@@ -18,18 +13,21 @@ public class CreateFinanceBuilder(DateTime date, IFinanceRepository financeRepos
     private readonly DateTime _date = date;
     private readonly IFinanceRepository _financeRepository = financeRepository;
 
-    public async Task CreateAsync(Mode mode, string sum, Categoria? categoria)
+    public async Task CreateAsync(Mode mode, string sum, Categoria? categoria, Action action)
     {
         if (sum == null && categoria == null)
             return;
 
         await _financeRepository.Create(mode, Convert.ToDecimal(sum), categoria!, _date);
+        action.Invoke();
+
+        ViewBuilder.OnClosePage();
     }
 }
 
-public class ViewBuilder()
+public static class ViewBuilder
 {
-    public async void OnClosePage() => await Application.Current!.MainPage!.Navigation.PopModalAsync();
+    public static async void OnClosePage() => await Application.Current!.MainPage!.Navigation.PopModalAsync();
 }
 
 public abstract class DateSynchronize
