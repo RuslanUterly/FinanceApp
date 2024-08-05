@@ -3,7 +3,7 @@ using Model.Enum;
 
 namespace Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
 
-interface IFinanceBuilder
+interface ICreateFinanceBuilder
 {
     Task CreateAsync(Mode mode, string sum, Categoria? categoria);
 }

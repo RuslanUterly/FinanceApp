@@ -17,12 +17,12 @@ public class AddCostViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
     public event Action CostAdded; 
 
-    private readonly IFinanceBuilder _financeBuilder;
+    private readonly ICreateFinanceBuilder _financeBuilder;
     private readonly IIconBuilder _iconBuilder;
 
     public AddCostViewModel(DateTime date, IFinanceRepository financeRepository)
     {
-        _financeBuilder = new FinanceBuilder(date, financeRepository);
+        _financeBuilder = new CreateFinanceBuilder(date, financeRepository);
         _iconBuilder = new IconBuilder();
 
         SelectionChangedCommand = new Command(OnSelectionChanged);

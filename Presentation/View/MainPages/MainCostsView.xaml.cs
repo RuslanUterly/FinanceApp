@@ -9,7 +9,7 @@ public partial class MainCostsView : ContentPage
 	{
 		InitializeComponent();
 
-        BindingContext = viewModel = new MainCostsViewModel(datePicker.Date);
+        BindingContext = viewModel = new MainCostsViewModel(datePicker.Date, Build.GetFinanceService());
 	}
 
     private void SwipeItemView_Invoked(object sender, EventArgs e)
