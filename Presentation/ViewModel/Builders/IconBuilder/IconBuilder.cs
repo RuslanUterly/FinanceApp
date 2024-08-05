@@ -17,16 +17,6 @@ public class IconBuilder : IIconBuilder
     public Categoria? PreviousSelectedItem { get; private set; }
     public Categoria? SelectedItem { get; private set; }
 
-    //public async Task ChangeAsync(Categoria item, ObservableCollection<Categoria> IconCosts)
-    //{
-    //    SelectedItem = new Categoria(item.Name, item.Icon, item.Color);
-
-    //    await ColorUpdater.UpdateColor(IconCosts, item);
-    //    await ColorUpdater.UpdateColor(IconCosts, PreviousSelectedItem!);
-
-    //    PreviousSelectedItem = item;
-    //}
-
     public async Task ChangeAsync(object sender, ObservableCollection<Categoria> IconCosts)
     {
         if (sender is Categoria item)
