@@ -6,6 +6,7 @@ using Presentation.ViewModel.AddPages;
 using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
 using Presentation.ViewModel.Builders.PageBuilder;
 using Presentation.ViewModel.Builders.PageBuilder.Interface;
+using Presentation.ViewModel.MainPages.Intrerfaces;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.Builders.FinanceBuilder;
@@ -78,11 +79,19 @@ public class OpenPageBuilder(DateTime date, IFinanceRepository financeRepository
 {
     public IFinanceViewModel _viewModel => viewModel;
 
-    public async Task OpenPageAsync(Action action)
+    public async Task OpenCostPageAsync(Action action)
     {
         var addCostViewModel = new AddCostViewModel(_viewModel.Date, _viewModel.FinanceRepository);
         // Подписка на событие
         addCostViewModel.CostAdded += action;
         await Application.Current!.MainPage!.Navigation.PushModalAsync(new AddCostView(addCostViewModel));
+    }
+
+    public async Task OpenProfitPageAsync(Action action)
+    {
+        var addProfitViewModel = new AddProfitViewModel(_viewModel.Date, _viewModel.FinanceRepository);
+        // Подписка на событие
+        addProfitViewModel.ProfitAdded += action;
+        await Application.Current!.MainPage!.Navigation.PushModalAsync(new AddProfitView(addProfitViewModel));
     }
 }

@@ -12,21 +12,11 @@ public partial class MainCostsView : ContentPage
         BindingContext = viewModel = new MainCostsViewModel(datePicker.Date, Build.GetFinanceService());
 	}
 
-    private void SwipeItemView_Invoked(object sender, EventArgs e)
-    {
-    }
-
     private void datePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
         if (viewModel.DateChangedCommand.CanExecute(datePicker.Date))
         {
             viewModel.DateChangedCommand.Execute(datePicker.Date);
         }
-        //BindingContext = viewModel = new MainCostsViewModel(datePicker.Date);
-    }
-
-    private void ContentPage_Loaded(object sender, EventArgs e)
-    {
-        //datePicker_DateSelected(null, null);
     }
 }

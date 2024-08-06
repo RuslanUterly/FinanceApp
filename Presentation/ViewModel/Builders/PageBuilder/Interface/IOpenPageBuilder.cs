@@ -2,7 +2,8 @@
 
 interface IOpenPageBuilder
 {
-    public Task OpenPageAsync(Action action);
+    public Task OpenCostPageAsync(Action action);
+    public Task OpenProfitPageAsync(Action action);
 }
 
 

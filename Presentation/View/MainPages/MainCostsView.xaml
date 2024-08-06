@@ -4,8 +4,7 @@
              x:Class="Presentation.View.MainCostsView"
              xmlns:cost="clr-namespace:Presentation.ViewModel"
              Title="MainCostsView"
-             BackgroundColor="#FAFAFA"
-             Loaded="ContentPage_Loaded">
+             BackgroundColor="#FAFAFA">
     
     <ContentPage.Resources>
         <Style TargetType="Grid">

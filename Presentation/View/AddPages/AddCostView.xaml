@@ -7,11 +7,8 @@
     
     <VerticalStackLayout>
         <HorizontalStackLayout>
-            <!--WidthRequest="55" HeightRequest="55"-->
-            <Button Text="←" BackgroundColor="#ADADAD" TextColor="White" FontAttributes="Bold" FontSize="22" HorizontalOptions="Start" Margin="30,30,0,0" 
-                    
+            <Button Text="←" BackgroundColor="#ADADAD" TextColor="White" FontAttributes="Bold" FontSize="22" HorizontalOptions="Start" Margin="30,30,0,0"      
                     Command="{Binding ClosePageCommand}"/>
-            <!--Text="Добавление расходов"-->
             <Label Text="Добавление расходов" TextColor="Black" FontAttributes="Bold" FontSize="22" Margin="20,42,0,0" HorizontalOptions="End"/>
         </HorizontalStackLayout>
 

@@ -4,20 +4,13 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Data.Interfaces;
 using Model.Enum;
-using Presentation.View.AddPages;
-using Presentation.ViewModel.AddPages;
 using Presentation.ViewModel.Builders.FinanceBuilder;
 using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
 using Presentation.ViewModel.Builders.PageBuilder.Interface;
+using Presentation.ViewModel.MainPages.Intrerfaces;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel;
-
-public interface IFinanceViewModel
-{
-    public DateTime Date { get; set; }
-    public IFinanceRepository FinanceRepository { get; set; }
-}
 
 public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
 {
@@ -40,7 +33,7 @@ public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
         _dateChange.UpdateElements += UpdateElements;
 
         DateChangedCommand = new Command<DateTime>(async date => await _dateChange.DateChangeAsync(date));
-        OpenPageCommand = new Command(async _ => await _openPage.OpenPageAsync(UpdateElements));
+        OpenPageCommand = new Command(async _ => await _openPage.OpenCostPageAsync(UpdateElements));
         DeleteCostCommand = new Command<Element>(async element => await _deleteFinance.DeleteAsync(element));
 
         UpdateElements();
