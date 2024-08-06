@@ -7,9 +7,8 @@
     
     <VerticalStackLayout>
         <HorizontalStackLayout>
-            <!--WidthRequest="55" HeightRequest="55"-->
-            <Button Text="←" BackgroundColor="#ADADAD" TextColor="White" FontAttributes="Bold" FontSize="22" HorizontalOptions="Start" Margin="30,30,0,0" Clicked="ExitPage_Clicked"/>
-            <!--Text="Добавление расходов"-->
+            <Button Text="←" BackgroundColor="#ADADAD" TextColor="White" FontAttributes="Bold" FontSize="22" HorizontalOptions="Start" Margin="30,30,0,0"
+                    Command="{Binding ClosePageCommand}"/>
             <Label Text="Добавление доходов" TextColor="Black" FontAttributes="Bold" FontSize="22" Margin="20,42,0,0" HorizontalOptions="End"/>
         </HorizontalStackLayout>
 
@@ -26,8 +25,7 @@
             <Label Text="Выберите категорию" TextColor="Black" FontSize="20" Margin="30,40,0,0"/>
         </VerticalStackLayout>
 
-        <CollectionView x:Name="collectionView" 
-                        ItemsSource="{Binding IconProfit}" 
+        <CollectionView x:Name="collectionView" ItemsSource="{Binding IconProfit}" 
                         ItemsLayout="VerticalGrid, 4" 
                         SelectionChangedCommand="{Binding SelectionChangedCommand}" 
                         SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
@@ -68,8 +66,8 @@
         </CollectionView>
 
 
-        <Button x:Name="buttonAdd" Text="Добавить" TextColor="White" Opacity="0.5" FontSize="18" FontAttributes="Bold" Margin="30,20,30,0" Padding="15" BackgroundColor="#8AAD90">
-
-        </Button>
+        <Button x:Name="buttonAdd" Text="Добавить" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="30,20,30,0" Padding="15" BackgroundColor="#8AAD90"
+                Command="{Binding ProfitCreateCommand}"
+                CommandParameter="{Binding Source={x:Reference entrySum}, Path=Text}"/>
     </VerticalStackLayout>
 </ContentPage>

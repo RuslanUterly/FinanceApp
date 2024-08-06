@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Presentation.View.MainProfitView"
+             xmlns:profit="clr-namespace:Presentation.ViewModel"
              Title="MainProfitView"
              BackgroundColor="#FAFAFA">
     
@@ -33,7 +34,7 @@
 
             <Grid Grid.Row="0">
                 <Label Text="₽ Всего" TextColor="Black" FontSize="22"/>
-                <Label x:Name="labelSum" Text="{Binding costsSum}" TextColor="Black" FontAttributes="Bold" FontSize="36" Margin="0,30,0,0"/>
+                <Label x:Name="labelSum" Text="{Binding ElementsSum}" TextColor="Black" FontAttributes="Bold" FontSize="36" Margin="0,30,0,0"/>
             </Grid>
 
             <Grid Margin="0,30,0,0" Grid.Row="1" HeightRequest="55" VerticalOptions="StartAndExpand">
@@ -47,11 +48,11 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="5"/>
                                 </Border.StrokeShape>
-                                <DatePicker x:Name="datePicker" TextColor="White" FontSize="15" Margin="15,0,15,0" HorizontalOptions="CenterAndExpand" />
+                                <DatePicker x:Name="datePicker" DateSelected="datePicker_DateSelected" TextColor="White" FontSize="15" Margin="15,0,15,0" HorizontalOptions="CenterAndExpand" />
                             </Border>
                         </Grid>
                         <Button Text="+" FontSize="35" TextColor="#EDEDED" BackgroundColor="#8AAD90" Padding="-90" WidthRequest="43" HeightRequest="43" Margin="0,0,5,0" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand"
-                        Clicked="AddProfit_Clicked"/>
+                                Command="{Binding OpenPageCommand}"/>
                     </Grid>
                 </Border>
             </Grid>
@@ -61,13 +62,14 @@
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="5"/>
                     </Border.StrokeShape>
-                    <CollectionView x:Name="listView" BackgroundColor="#8AAD90">
+                    <CollectionView x:Name="listView" ItemsSource="{Binding Elements}" BackgroundColor="#8AAD90">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <SwipeView>
                                     <SwipeView.RightItems>
                                         <SwipeItems SwipeBehaviorOnInvoked="Close">
-                                            <SwipeItemView>
+                                            <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type profit:MainProfitViewModel}}, Path=DeleteProfitCommand}"
+                                                           CommandParameter="{Binding}">
                                                 <Grid HeightRequest="40" WidthRequest="40" Margin="0,0,15,0">
                                                     <Border Stroke="DarkRed" BackgroundColor="DarkRed">
                                                         <Border.StrokeShape>
@@ -83,18 +85,18 @@
                                     <Grid Padding="15" HeightRequest="70">
                                         <HorizontalStackLayout>
                                             <Grid>
-                                                <Border Stroke="{Binding Color}" BackgroundColor="{Binding Color}" HeightRequest="40" WidthRequest="40">
+                                                <Border Stroke="{Binding Categoria.Color}" BackgroundColor="{Binding Categoria.Color}" HeightRequest="40" WidthRequest="40">
                                                     <Border.StrokeShape>
                                                         <RoundRectangle CornerRadius="5"/>
                                                     </Border.StrokeShape>
 
-                                                    <Image Source="{Binding Icon}" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="20" HeightRequest="20"/>
+                                                    <Image Source="{Binding Categoria.Icon}" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="20" HeightRequest="20"/>
                                                 </Border>
                                             </Grid>
-                                            <Label Text="{Binding Title}" FontSize="15" Padding="10" TextColor="White" HorizontalOptions="Center" />
+                                            <Label Text="{Binding Categoria.Name}" FontSize="15" Padding="10" TextColor="White" HorizontalOptions="Center" />
                                         </HorizontalStackLayout>
                                         <HorizontalStackLayout HorizontalOptions="End" Padding="10">
-                                            <Label Text="{Binding Sum}" FontSize="15" HorizontalOptions="End"/>
+                                            <Label Text="{Binding Sum}" TextColor="White" FontSize="15" HorizontalOptions="End"/>
                                             <Label Text=" руб." FontSize="15" TextColor="White" Margin="0,0,-10,0" HorizontalOptions="End"/>
                                         </HorizontalStackLayout>
                                     </Grid>

@@ -7,11 +7,10 @@ public partial class AddProfitView : ContentPage
 	public AddProfitView()
 	{
 		InitializeComponent();
-        BindingContext = new AddProfitViewModel();
     }
 
-    async void ExitPage_Clicked(object sender, EventArgs e)
+    public AddProfitView(AddProfitViewModel viewModel) : this()
     {
-        await Navigation.PopModalAsync();
+        BindingContext = viewModel;
     }
 }

@@ -11,6 +11,6 @@ public partial class AddCostView : ContentPage
 
     public AddCostView(AddCostViewModel viewModel) : this()
     {
-        BindingContext = viewModel /*new AddCostViewModel(date, financeRepository, viewModel)*/;
+        BindingContext = viewModel;
     }
 }

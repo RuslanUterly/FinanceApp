@@ -4,44 +4,47 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Data.Interfaces;
 using Model.Enum;
-using Presentation.View.AddPages;
-using Presentation.ViewModel.AddPages;
+using Presentation.ViewModel.Builders.FinanceBuilder;
+using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
+using Presentation.ViewModel.Builders.PageBuilder.Interface;
+using Presentation.ViewModel.MainPages.Intrerfaces;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel;
 
-public class MainCostsViewModel : INotifyPropertyChanged
+public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private readonly IFinanceRepository _financeRepository;
-    //private readonly IChangeRepository _changeRepository;
+    private readonly IDeleteFinanceBuilder _deleteFinance;
+    private readonly IDateChangeBuilder _dateChange;
+    private readonly IOpenPageBuilder _openPage;
+
     private ObservableCollection<Element>? elements;
-    private decimal elementsSum;
-    private DateTime _date;
+    private string? elementsSum;
 
-    public MainCostsViewModel()
+    public MainCostsViewModel(DateTime date, IFinanceRepository financeRepository)
     {
-        //var serviceProvider = Build.GetServiceProvider();
-        //_changeRepository = Build.GetChangeService(serviceProvider);
-        //_changeRepository.ChangeElement += UpdateElements;
+        _deleteFinance = new DeleteFinanceBuilder(date, financeRepository, this);
+        _dateChange = new DateChangeBuilder(date, financeRepository, this);
+        _openPage = new OpenPageBuilder(date, financeRepository, this);
 
-        _financeRepository = Build.GetFinanceService();
+        _deleteFinance.UpdateElements += UpdateElements;
+        _dateChange.UpdateElements += UpdateElements;
 
-        DateChangedCommand = new Command<DateTime>(OnDateChanged);
-        OpenPageCommand = new Command(OnOpenPage);
-        DeleteCostCommand = new Command<Element>(OnDeleteCost);
-    }
+        DateChangedCommand = new Command<DateTime>(async date => await _dateChange.DateChangeAsync(date));
+        OpenPageCommand = new Command(async _ => await _openPage.OpenCostPageAsync(UpdateElements));
+        DeleteCostCommand = new Command<Element>(async element => await _deleteFinance.DeleteAsync(element));
 
-    public MainCostsViewModel(DateTime date) : this()
-    {
-        _date = date;
         UpdateElements();
     }
 
+    public DateTime Date { get; set; }
+    public IFinanceRepository FinanceRepository { get; set; }
+
     public ObservableCollection<Element> Elements
     {
-        get => elements;
+        get => elements!;
         set
         {
             elements = value;
@@ -49,9 +52,9 @@ public class MainCostsViewModel : INotifyPropertyChanged
         }
     }
 
-    public decimal ElementsSum
+    public string ElementsSum
     {
-        get => elementsSum;
+        get => elementsSum!;
         set
         {
             elementsSum = value; 
@@ -63,30 +66,10 @@ public class MainCostsViewModel : INotifyPropertyChanged
     public ICommand DateChangedCommand { get; }
     public ICommand DeleteCostCommand { get; }
 
-    private async void OnOpenPage()
-    {
-        var addCostViewModel = new AddCostViewModel(_date, _financeRepository);
-        // Подписка на событие
-        addCostViewModel.CostAdded += UpdateElements;
-
-        await Application.Current.MainPage.Navigation.PushModalAsync(new AddCostView(addCostViewModel));
-    }
-
-    private async void OnDateChanged(DateTime newDate)
-    {
-        _date = newDate;
-        UpdateElements();
-    }
-
-    private async void OnDeleteCost(Element? element)
-    {
-        _financeRepository.Delete(_date, element);
-        UpdateElements();
-    }
     private async void UpdateElements()
     {
-        Elements = await _financeRepository.GetAll(_date, Mode.cost);
-        ElementsSum = await _financeRepository.GetSum(_date, Mode.cost);
+        Elements = await FinanceRepository.GetAll(Date, Mode.cost);
+        ElementsSum = $"{await FinanceRepository.GetSum(Date, Mode.cost)} руб.";
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

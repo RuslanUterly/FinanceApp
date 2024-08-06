@@ -1,16 +1,23 @@
 using Presentation.View.AddPages;
+using Presentation.ViewModel;
 
 namespace Presentation.View;
 
 public partial class MainProfitView : ContentPage
 {
+	MainProfitViewModel viewModel;
 	public MainProfitView()
 	{
 		InitializeComponent();
+
+		BindingContext = viewModel = new MainProfitViewModel(datePicker.Date, Build.GetFinanceService());
 	}
 
-    private void AddProfit_Clicked(object sender, EventArgs e)
+    private void datePicker_DateSelected(object sender, DateChangedEventArgs e)
     {
-		Navigation.PushModalAsync(new AddProfitView());
+        if (viewModel.DateChangedCommand.CanExecute(datePicker.Date))
+        {
+            viewModel.DateChangedCommand.Execute(datePicker.Date);
+        }
     }
 }
