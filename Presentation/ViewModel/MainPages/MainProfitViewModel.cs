@@ -1,12 +1,7 @@
 ﻿using Presentation.ViewModel.MainPages.Intrerfaces;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Model.Enum;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Data.Interfaces;
