@@ -58,8 +58,4 @@
 	  </MauiXaml>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="ViewModel\StatisticPages\" />
-	</ItemGroup>
-
 </Project>
