@@ -1,14 +1,14 @@
 using Presentation.View.AddPages;
 using Presentation.ViewModel;
 
-namespace Presentation.View;
+namespace Presentation.View.NavigationPages;
 
 public partial class MainProfitView : ContentPage
 {
 	MainProfitViewModel viewModel;
 	public MainProfitView()
 	{
-		InitializeComponent();
+        InitializeComponent();
 
 		BindingContext = viewModel = new MainProfitViewModel(datePicker.Date, Build.GetFinanceService());
 	}

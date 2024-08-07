@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Presentation.View.MainProfitView"
-             xmlns:profit="clr-namespace:Presentation.ViewModel"
-             Title="MainProfitView"
+             x:Class="Presentation.View.NavigationPages.MainCostsView"
+             xmlns:cost="clr-namespace:Presentation.ViewModel"
+             Title="MainCostsView"
              BackgroundColor="#FAFAFA">
     
     <ContentPage.Resources>
@@ -15,7 +15,7 @@
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor"
-                                Value="#65826A" />
+                                    Value="#65826A" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -68,7 +68,7 @@
                                 <SwipeView>
                                     <SwipeView.RightItems>
                                         <SwipeItems SwipeBehaviorOnInvoked="Close">
-                                            <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type profit:MainProfitViewModel}}, Path=DeleteProfitCommand}"
+                                            <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type cost:MainCostsViewModel}}, Path=DeleteCostCommand}"
                                                            CommandParameter="{Binding}">
                                                 <Grid HeightRequest="40" WidthRequest="40" Margin="0,0,15,0">
                                                     <Border Stroke="DarkRed" BackgroundColor="DarkRed">

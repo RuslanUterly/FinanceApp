@@ -44,12 +44,22 @@
 	  <MauiXaml Update="View\AddPages\AddProfitView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\MainPages\MainCostsView.xaml">
+	  <MauiXaml Update="View\NavigationPages\MainCostsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\MainPages\MainProfitView.xaml">
+	  <MauiXaml Update="View\NavigationPages\MainProfitView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\NavigationPages\StatisticCostsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\NavigationPages\StatisticProfitView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ViewModel\StatisticPages\" />
 	</ItemGroup>
 
 </Project>

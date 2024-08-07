@@ -1,6 +1,6 @@
 using Presentation.ViewModel;
 
-namespace Presentation.View;
+namespace Presentation.View.NavigationPages;
 
 public partial class MainCostsView : ContentPage
 {
