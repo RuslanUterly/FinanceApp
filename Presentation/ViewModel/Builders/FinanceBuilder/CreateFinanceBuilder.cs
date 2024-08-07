@@ -46,12 +46,12 @@ public class DeleteFinanceBuilder(DateTime date, IFinanceRepository financeRepos
 {
     public event Action? UpdateElements;
     
-    public IFinanceViewModel _viewModel => viewModel;
-    public DateTime _date => _viewModel.Date;
+    public IFinanceViewModel ViewModel => viewModel;
+    public DateTime _date => ViewModel.Date;
 
     public async Task DeleteAsync(Element element)
     {
-        await _viewModel.FinanceRepository.Delete(_date, element!);
+        await ViewModel.FinanceRepository.Delete(_date, element!);
         UpdateElements?.Invoke();
     }
 }
@@ -62,11 +62,11 @@ public class DateChangeBuilder(DateTime date, IFinanceRepository financeReposito
 {
     public event Action? UpdateElements;
 
-    public IFinanceViewModel _viewModel => viewModel;
+    public IFinanceViewModel ViewModel => viewModel;
 
     public Task DateChangeAsync(DateTime newDate)
     {
-        _viewModel.Date = newDate;
+        ViewModel.Date = newDate;
         UpdateElements?.Invoke();
 
         return Task.CompletedTask;
@@ -77,11 +77,11 @@ public class OpenPageBuilder(DateTime date, IFinanceRepository financeRepository
     : DateSynchronize(ref date, ref financeRepository, ref viewModel),
     IOpenPageBuilder
 {
-    public IFinanceViewModel _viewModel => viewModel;
+    public IFinanceViewModel ViewModel => viewModel;
 
     public async Task OpenCostPageAsync(Action action)
     {
-        var addCostViewModel = new AddCostViewModel(_viewModel.Date, _viewModel.FinanceRepository);
+        var addCostViewModel = new AddCostViewModel(ViewModel.Date, ViewModel.FinanceRepository);
         // Подписка на событие
         addCostViewModel.CostAdded += action;
         await Application.Current!.MainPage!.Navigation.PushModalAsync(new AddCostView(addCostViewModel));
@@ -89,7 +89,7 @@ public class OpenPageBuilder(DateTime date, IFinanceRepository financeRepository
 
     public async Task OpenProfitPageAsync(Action action)
     {
-        var addProfitViewModel = new AddProfitViewModel(_viewModel.Date, _viewModel.FinanceRepository);
+        var addProfitViewModel = new AddProfitViewModel(ViewModel.Date, ViewModel.FinanceRepository);
         // Подписка на событие
         addProfitViewModel.ProfitAdded += action;
         await Application.Current!.MainPage!.Navigation.PushModalAsync(new AddProfitView(addProfitViewModel));
