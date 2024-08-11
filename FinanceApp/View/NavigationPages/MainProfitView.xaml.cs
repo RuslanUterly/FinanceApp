@@ -1,17 +1,16 @@
-using Data.Interfaces;
-using Presentation.View.AddPages;
-using Presentation.ViewModel;
+using FinanceApp.View.AddPages;
+using FinanceApp.ViewModel;
 
-namespace Presentation.View.NavigationPages;
+namespace FinanceApp.View.NavigationPages;
 
 public partial class MainProfitView : ContentPage
 {
 	MainProfitViewModel viewModel;
-	public MainProfitView(IFinanceRepository financeRepository)
+	public MainProfitView()
 	{
         InitializeComponent();
 
-		BindingContext = viewModel = new MainProfitViewModel(datePicker.Date, financeRepository);
+		BindingContext = viewModel = new MainProfitViewModel(datePicker.Date, Build.GetFinanceService());
 	}
 
     private void datePicker_DateSelected(object sender, DateChangedEventArgs e)
