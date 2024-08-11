@@ -1,3 +1,5 @@
+using Microcharts;
+
 namespace Presentation.View.NavigationPages;
 
 public partial class StatisticCostsView : ContentPage

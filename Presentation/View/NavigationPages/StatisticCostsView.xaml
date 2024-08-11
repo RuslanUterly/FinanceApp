@@ -2,9 +2,29 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Presentation.View.NavigationPages.StatisticCostsView"
-             
-             Title="StatisticCostsView">
+             xmlns:t="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+             xmlns:micro="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             Title="StatisticCostsView"
+             BackgroundColor="#FAFAFA">
     <Grid>
-        
+        <t:SfTabView>
+            <t:SfTabView.Items>
+                <t:SfTabItem Header="Все время">
+                    <micro:ChartView Margin="0,40,0,0" x:Name="chartView" HeightRequest="250"/>
+                </t:SfTabItem>
+                
+                <t:SfTabItem Header="Год">
+                    
+                </t:SfTabItem>
+                
+                <t:SfTabItem Header="Месяц">
+                    
+                </t:SfTabItem>
+                
+                <t:SfTabItem Header="Неделя">
+                    
+                </t:SfTabItem>
+            </t:SfTabView.Items>
+        </t:SfTabView>
     </Grid>
 </ContentPage>

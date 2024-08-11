@@ -1,8 +1,11 @@
 ﻿using Data.Data;
 using Data.Interfaces;
 using Data.Repository;
+using Syncfusion.Maui.Core.Hosting;
 using Microsoft.Extensions.Logging;
 using Presentation.View.NavigationPages;
+using UraniumUI;
+using Microcharts.Maui;
 
 namespace FinanceApp;
 
@@ -13,6 +16,10 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMicrocharts()
+            .ConfigureSyncfusionCore()
+            .UseUraniumUI()
+            .UseUraniumUIMaterial()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
