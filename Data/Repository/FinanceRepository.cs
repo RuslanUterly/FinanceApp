@@ -13,7 +13,6 @@ namespace Data.Repository;
 public class FinanceRepository(DataFinanceContext finance) : IFinanceRepository
 {
     public readonly DataFinanceContext _finances = finance;
-    //public event Action ChangeElement;
 
     public Task Create(Mode mode, decimal cash, Categoria categoria, DateTime date)
     {
@@ -47,8 +46,6 @@ public class FinanceRepository(DataFinanceContext finance) : IFinanceRepository
 
         Save();
 
-        //ChangeElement?.Invoke();
-
         return Task.CompletedTask;
     }
 
@@ -59,7 +56,6 @@ public class FinanceRepository(DataFinanceContext finance) : IFinanceRepository
                          .Remove(element);
 
         Save();
-        //ChangeElement?.Invoke();
 
         return Task.CompletedTask;
     }

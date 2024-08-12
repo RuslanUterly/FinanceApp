@@ -33,7 +33,8 @@ public static class MauiProgram
             .Services.AddSingleton<DataFinanceContext>()
                      .AddSingleton<IFinanceRepository, FinanceRepository>()
                      .AddSingleton<MainCostsView>()
-                     .AddSingleton<MainProfitView>();
+                     .AddSingleton<MainProfitView>()
+                     .AddSingleton<StatisticCostsView>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
