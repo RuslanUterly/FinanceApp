@@ -22,15 +22,6 @@ public static class Build
         return serviceProvider.GetRequiredService<IFinanceRepository>();
     }
 
-    public static IChangeRepository GetChangeService()
-    {
-        IServiceCollection services = new ServiceCollection();
-        services.AddTransient<DataFinanceContext>();
-        services.AddTransient<IFinanceRepository, FinanceRepository>();
-        var serviceProvider = services.BuildServiceProvider();
-
-        return serviceProvider.GetRequiredService<IChangeRepository>();
-    }
 
     //public static IFinanceRepository GetFinanceService(IServiceProvider serviceProvider)
     //{

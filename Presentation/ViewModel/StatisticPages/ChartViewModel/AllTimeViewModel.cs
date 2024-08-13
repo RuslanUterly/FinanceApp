@@ -1,6 +1,7 @@
 ﻿using Data.Interfaces;
 using Microcharts;
 using Model.Enum;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,32 +20,71 @@ class AllTimeViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private Chart chart;
-    private readonly IFinanceRepository _financeRepository;
+    private readonly IGroupRepository _groupRepository;
+    private readonly IStatisticViewModel _viewModel;
+    private string period;
 
-    public AllTimeViewModel(IFinanceRepository financeRepository)
+    public AllTimeViewModel(IGroupRepository groupRepository, IStatisticViewModel viewModel)
     {
-        _financeRepository = financeRepository;
+        _groupRepository = groupRepository;
+        _viewModel = viewModel;
+
+        Elements = _groupRepository.GetByAllTime(Mode.cost).Result;
+        _viewModel.Elements = Elements;
+        Print();
     }
 
-    public ObservableCollection<Element> Elements => GetElementsForPeriod(0);
+    public ObservableCollection<Element> Elements {  get; private set; }
+    public string Period 
+    { 
+        get => period = "Весь период";
+        set
+        {
+            period = value;
+            OnPropertyChanged();
+        }
+    }
     public Chart ChartViewAll
     {
         get => chart;
         set
         {
             chart = value;
-            OnPropertyChanged(nameof(ChartViewAll));
+            OnPropertyChanged();
         }
-    } 
-
-    private ObservableCollection<Element> GetElementsForPeriod(int period)
-    {
-        return null;   
     }
 
-    private void GetFinanceList()
+    private List<ChartEntry> SetEntries()
     {
+        List<ChartEntry> entries = [];
+        var items = Elements;
 
+        foreach (var item in items)
+        {
+            entries.Add(new ChartEntry(Convert.ToInt32(item.Sum))
+            {
+                Label = item.Categoria!.Name,
+                ValueLabel = item.Sum.ToString(),
+                Color = SKColor.Parse(item.Categoria.Color),
+            });
+        }
+
+        return entries;
+    }
+
+    public void Print()
+    {
+        List<ChartEntry> entries = SetEntries();
+
+        ChartViewAll = new DonutChart()
+        {
+            Entries = entries,
+            LabelTextSize = 35,
+            BackgroundColor = SKColor.Parse("#FAFAFA"),
+        };
+        OnPropertyChanged();
+
+        return;
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

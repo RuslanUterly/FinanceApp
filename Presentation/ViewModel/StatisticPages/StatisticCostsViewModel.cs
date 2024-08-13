@@ -7,14 +7,21 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.StatisticPages;
 
-public class StatisticCostsViewModel : INotifyPropertyChanged
+interface IStatisticViewModel
+{
+    ObservableCollection<Element> Elements { get; set; }
+}
+
+public class StatisticCostsViewModel : INotifyPropertyChanged, IStatisticViewModel
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private ObservableCollection<Element>? elements;
+
     public StatisticCostsViewModel()
     {
         

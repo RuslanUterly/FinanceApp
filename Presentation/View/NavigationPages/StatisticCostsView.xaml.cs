@@ -6,10 +6,11 @@ namespace Presentation.View.NavigationPages;
 
 public partial class StatisticCostsView : ContentPage
 {
-	public StatisticCostsView(IFinanceRepository financeRepository)
+    StatisticCostsViewModel viewModel;
+    public StatisticCostsView(IGroupRepository groupRepository)
 	{
 		InitializeComponent();
-		tabItemAll.BindingContext = new AllTimeViewModel(financeRepository);
-		BindingContext = new StatisticCostsViewModel();
+        BindingContext = viewModel = new StatisticCostsViewModel();
+        tabItemAll.BindingContext = new AllTimeViewModel(groupRepository, viewModel);
 	}
 }

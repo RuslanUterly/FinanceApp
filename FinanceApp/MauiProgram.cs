@@ -32,6 +32,7 @@ public static class MauiProgram
             })
             .Services.AddSingleton<DataFinanceContext>()
                      .AddSingleton<IFinanceRepository, FinanceRepository>()
+                     .AddSingleton<IGroupRepository, GroupElementRepository>()
                      .AddSingleton<MainCostsView>()
                      .AddSingleton<MainProfitView>()
                      .AddSingleton<StatisticCostsView>();

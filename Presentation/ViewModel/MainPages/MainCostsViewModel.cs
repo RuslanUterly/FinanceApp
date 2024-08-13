@@ -57,7 +57,7 @@ public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
         get => elementsSum!;
         set
         {
-            elementsSum = value; 
+            elementsSum = value;
             OnPropertyChanged(); 
         }
     }
