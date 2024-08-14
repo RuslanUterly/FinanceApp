@@ -68,8 +68,8 @@ public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
 
     private async void UpdateElements()
     {
-        Elements = await FinanceRepository.GetAll(Date, Mode.cost);
-        ElementsSum = $"{await FinanceRepository.GetSum(Date, Mode.cost)} руб.";
+        Elements = await FinanceRepository.GetAll(Date, Mode.Cost);
+        ElementsSum = $"{await FinanceRepository.GetSum(Date, Mode.Cost)} руб.";
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

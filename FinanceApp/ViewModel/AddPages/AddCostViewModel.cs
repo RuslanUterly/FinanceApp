@@ -27,7 +27,7 @@ public class AddCostViewModel : INotifyPropertyChanged
         _iconBuilder = new IconBuilder();
 
         SelectionChangedCommand = new Command(async sender => await _iconBuilder.ChangeAsync(sender, IconCosts));
-        CostCreateCommand = new Command<string>(async sum => await _financeBuilder.CreateAsync(Mode.cost, sum, _iconBuilder.SelectedItem, CostAdded!));
+        CostCreateCommand = new Command<string>(async sum => await _financeBuilder.CreateAsync(Mode.Cost, sum, _iconBuilder.SelectedItem, CostAdded!));
         ClosePageCommand = new Command(ViewBuilder.OnClosePage);
     }
 

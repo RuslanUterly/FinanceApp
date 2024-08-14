@@ -4,6 +4,7 @@ using Data.Repository;
 using Syncfusion.Maui.Core.Hosting;
 using Microsoft.Extensions.Logging;
 using Presentation.View.NavigationPages;
+using Presentation.ViewModel.StatisticPages;
 using UraniumUI;
 using Microcharts.Maui;
 
@@ -35,7 +36,9 @@ public static class MauiProgram
                      .AddSingleton<IGroupRepository, GroupElementRepository>()
                      .AddSingleton<MainCostsView>()
                      .AddSingleton<MainProfitView>()
+                     .AddSingleton<StatisticCostsViewModel>()
                      .AddSingleton<StatisticCostsView>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

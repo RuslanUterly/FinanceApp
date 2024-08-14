@@ -27,7 +27,7 @@ public class AddProfitViewModel : INotifyPropertyChanged
         _iconBuilder = new IconBuilder();
 
         SelectionChangedCommand = new Command(async sender => await _iconBuilder.ChangeAsync(sender, IconProfit));
-        ProfitCreateCommand = new Command<string>(async sum => await _financeBuilder.CreateAsync(Mode.profit, sum, _iconBuilder.SelectedItem, ProfitAdded!));
+        ProfitCreateCommand = new Command<string>(async sum => await _financeBuilder.CreateAsync(Mode.Profit, sum, _iconBuilder.SelectedItem, ProfitAdded!));
         ClosePageCommand = new Command(ViewBuilder.OnClosePage);
     }
 

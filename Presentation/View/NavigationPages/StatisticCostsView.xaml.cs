@@ -1,16 +1,26 @@
 using Data.Interfaces;
+using Model.Enum;
 using Presentation.ViewModel.StatisticPages;
 using Presentation.ViewModel.StatisticPages.ChartViewModel;
+using Syncfusion.Maui.TabView;
+using System.Runtime.CompilerServices;
 
 namespace Presentation.View.NavigationPages;
 
 public partial class StatisticCostsView : ContentPage
 {
-    StatisticCostsViewModel viewModel;
+    private readonly IGroupRepository _groupRepository;
     public StatisticCostsView(IGroupRepository groupRepository)
-	{
-		InitializeComponent();
-        BindingContext = viewModel = new StatisticCostsViewModel();
-        tabItemAll.BindingContext = new AllTimeViewModel(groupRepository, viewModel);
-	}
+    {
+        InitializeComponent();
+
+        _groupRepository = groupRepository;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        BindingContext = new StatisticCostsViewModel(_groupRepository);
+    }
 }

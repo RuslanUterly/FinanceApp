@@ -8,6 +8,6 @@ namespace Model.Enum;
 
 public enum Mode : int
 {
-    cost = 0,
-    profit = 1,
+    Cost = 0,
+    Profit = 1,
 }

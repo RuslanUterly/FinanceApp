@@ -15,26 +15,34 @@ using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.StatisticPages.ChartViewModel;
 
-class AllTimeViewModel : INotifyPropertyChanged
+public class StatisticAllTimeViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private Chart chart;
     private readonly IGroupRepository _groupRepository;
-    private readonly IStatisticViewModel _viewModel;
-    private string period;
 
-    public AllTimeViewModel(IGroupRepository groupRepository, IStatisticViewModel viewModel)
+    private Chart chart;
+    private string period;
+    private ObservableCollection<Element> elements;
+
+    public StatisticAllTimeViewModel(Mode mode, IGroupRepository groupRepository)
     {
         _groupRepository = groupRepository;
-        _viewModel = viewModel;
 
-        Elements = _groupRepository.GetByAllTime(Mode.cost).Result;
-        _viewModel.Elements = Elements;
+        Elements = _groupRepository.GetByAllTime(mode).Result;
+
         Print();
     }
 
-    public ObservableCollection<Element> Elements {  get; private set; }
+    public ObservableCollection<Element> Elements
+    { 
+        get => elements;
+        set
+        {
+            elements = value;
+            OnPropertyChanged();
+}
+    }
     public string Period 
     { 
         get => period = "Весь период";
