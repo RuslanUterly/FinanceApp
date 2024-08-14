@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.StatisticPages.ChartViewModel;
@@ -19,48 +20,55 @@ public class StatisticYearViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly IGroupRepository _groupRepository;
+    private readonly Mode _mode;
 
     private Chart chart;
     private string period;
+    private string resultSum;
+    private List<DateTime> dateTimes;
     private ObservableCollection<Element> elements;
+    private int dateOffset;
 
     public StatisticYearViewModel(Mode mode, IGroupRepository groupRepository)
     {
         _groupRepository = groupRepository;
+        _mode = mode;
 
-        Elements = _groupRepository.GetByYear(mode, default, 0).Result;
+        OnForwardPeriod = new Command(async _ => await Forward());
+        OnBackPeriod = new Command(async _ => await Back());
 
-        Print();
+        UpdateItem();
     }
 
     public ObservableCollection<Element> Elements 
     { 
         get => elements;
         set
-        {
-            elements = value;
-            OnPropertyChanged();
-        }
+            { elements = value; OnPropertyChanged(); }
     }
 
     public string Period
     {
         get => period;
+        set 
+            { period = value; OnPropertyChanged(); }
+    }
+
+    public string ResultSum 
+    { 
+        get => resultSum; 
         set
-        {
-            period = value;
-            OnPropertyChanged();
-        }
+            { resultSum = value; OnPropertyChanged(); }
     }
     public Chart ChartViewYear
     {
         get => chart;
         set
-        {
-            chart = value;
-            OnPropertyChanged();
-}
+            { chart = value; OnPropertyChanged(); }
     }
+
+    public ICommand OnForwardPeriod { get; }
+    public ICommand OnBackPeriod { get; }
 
     private List<ChartEntry> SetEntries()
     {
@@ -93,6 +101,31 @@ public class StatisticYearViewModel : INotifyPropertyChanged
         OnPropertyChanged();
 
         return;
+    }
+
+    private async Task Forward()
+    {
+        if (dateOffset == 0) 
+            return;
+
+        dateOffset++;
+        await UpdateItem();
+    }
+
+    private async Task Back()
+    {
+        dateOffset--;
+
+        await UpdateItem();
+    }
+
+
+    private async Task UpdateItem()
+    {      
+        (Elements, dateTimes) = await _groupRepository.GetByYear(_mode, default, dateOffset);
+        Period = $"{dateTimes.First():yyyy} г.";
+        ResultSum = $"Общая сумма: {Elements.Sum(x => x.Sum)} руб.";
+        Print();
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

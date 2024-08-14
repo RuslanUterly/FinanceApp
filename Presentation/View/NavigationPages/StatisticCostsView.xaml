@@ -10,7 +10,7 @@
     <Grid Margin="30,10,30,30">
         <t:SfTabView IndicatorBackground="#65826A" Grid.Row="0">
             <t:SfTabView.Items>
-                <t:SfTabItem x:Name="tabItemAll" Header="Все время" BindingContext="{Binding AllTimeViewModel}">
+                <t:SfTabItem x:Name="tabItemAll" Header="Весь срок" BindingContext="{Binding AllTimeViewModel}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -23,7 +23,7 @@
                                    HorizontalOptions="CenterAndExpand" />
                             <micro:ChartView x:Name="chartViewAll" Margin="0,40,0,0" Chart="{Binding AllTimeViewModel.ChartViewAll}" HeightRequest="250" Grid.Row="0"/>
                         </Grid>
-                        <Grid Margin="0,10,0,0" Grid.Row="1">
+                        <!--<Grid Margin="0,10,0,0" Grid.Row="1">
                             <Grid Grid.Column="0">
                                 <Button Text="← Назад" Command="{Binding AllTimeViewModel.OnForwardPeriod}"  TextColor="White" BackgroundColor="#ADADAD"  HorizontalOptions="Start" WidthRequest="100"/>
                             </Grid>
@@ -33,7 +33,7 @@
                             <Grid Grid.Column="2">
                                 <Button Text="Далее →" Command="{Binding AllTimeViewModel.OnBackPeriod}" TextColor="White"  BackgroundColor="#ADADAD" HorizontalOptions="End" WidthRequest="100"/>
                             </Grid>
-                        </Grid>
+                        </Grid>-->
 
                         <Grid Padding="0" Margin="0,30,0,0" Grid.Row="2">
                             <Border Stroke="#8AAD90" BackgroundColor="#8AAD90">
@@ -80,20 +80,20 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Margin="0,20,0,0" Grid.Row="0">
-                                <Label Text="Общая сумма:" 
+                                <Label Text="{Binding YearViewModel.ResultSum}" 
                                        FontSize="22" FontAttributes="Bold" TextColor="Black" 
                                        HorizontalOptions="CenterAndExpand" />
                                 <micro:ChartView x:Name="chartViewYear" Margin="0,40,0,0" Chart="{Binding YearViewModel.ChartViewYear}" HeightRequest="250" Grid.Row="0"/>
                             </Grid>
                             <Grid Margin="0,10,0,0" Grid.Row="1">
                                 <Grid Grid.Column="0">
-                                    <Button Text="← Назад" Command="{Binding YearViewModel.OnForwardPeriod}"  TextColor="White" BackgroundColor="#ADADAD"  HorizontalOptions="Start" WidthRequest="100"/>
+                                    <Button Text="← Назад" Command="{Binding YearViewModel.OnBackPeriod}"  TextColor="White" BackgroundColor="#ADADAD"  HorizontalOptions="Start" WidthRequest="100"/>
                                 </Grid>
                                 <Grid Grid.Column="1">
                                     <Label Text="{Binding YearViewModel.Period}" FontSize="14" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center"></Label>
                                 </Grid>
                                 <Grid Grid.Column="2">
-                                    <Button Text="Далее →" Command="{Binding YearViewModel.OnBackPeriod}" TextColor="White"  BackgroundColor="#ADADAD" HorizontalOptions="End" WidthRequest="100"/>
+                                    <Button Text="Далее →" Command="{Binding YearViewModel.OnForwardPeriod}" TextColor="White"  BackgroundColor="#ADADAD" HorizontalOptions="End" WidthRequest="100"/>
                                 </Grid>
                             </Grid>
                             <Grid Padding="0" Margin="0,30,0,0" Grid.Row="2">

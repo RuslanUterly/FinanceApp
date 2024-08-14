@@ -11,8 +11,8 @@ namespace Data.Interfaces;
 
 public interface IGroupRepository
 {
-    Task<ObservableCollection<Element>> GetByAllTime(Mode mode);
-    Task<ObservableCollection<Element>> GetByYear(Mode mode, DateTime startDate, int period);
-    Task<ObservableCollection<Element>> GetByMonth(Mode mode, DateTime startDate, int period);
-    Task<ObservableCollection<Element>> GetByWeek(Mode mode, DateTime startDate, int period);
+    ObservableCollection<Element> GetByAllTime(Mode mode);
+    Task<(ObservableCollection<Element>, List<DateTime>)> GetByYear(Mode mode, DateTime startDate, int period);
+    ObservableCollection<Element> GetByMonth(Mode mode, DateTime startDate, int period);
+    ObservableCollection<Element> GetByWeek(Mode mode, DateTime startDate, int period);
 }

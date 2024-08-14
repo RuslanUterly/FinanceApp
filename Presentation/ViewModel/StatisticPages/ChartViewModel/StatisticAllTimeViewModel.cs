@@ -29,7 +29,7 @@ public class StatisticAllTimeViewModel : INotifyPropertyChanged
     {
         _groupRepository = groupRepository;
 
-        Elements = _groupRepository.GetByAllTime(mode).Result;
+        Elements = _groupRepository.GetByAllTime(mode);
 
         Print();
     }

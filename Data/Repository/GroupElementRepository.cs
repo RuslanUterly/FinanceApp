@@ -19,14 +19,14 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
 
     private ElementGrouper grouper => new ElementGrouper();
 
-    public Task<ObservableCollection<Element>> GetByAllTime(Mode mode)
+    public ObservableCollection<Element> GetByAllTime(Mode mode)
     {
         var elements = _finances.Finance.SelectMany(f => f.Elements.Where(e => e.Mode == mode)).ToObservableCollection();
 
-        return grouper.Group(elements);
+        return grouper.Group(elements).Result;
     }
 
-    public Task<ObservableCollection<Element>> GetByMonth(Mode mode, DateTime date, int period)
+    public ObservableCollection<Element> GetByMonth(Mode mode, DateTime date, int period)
     {
         var dateTimes = new List<DateTime>();
 
@@ -39,10 +39,10 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
 
         dateTimes.Add(endDate);
 
-        return grouper.Group(elements);
+        return grouper.Group(elements).Result;
     }
 
-    public Task<ObservableCollection<Element>> GetByWeek(Mode mode, DateTime date, int period)
+    public ObservableCollection<Element> GetByWeek(Mode mode, DateTime date, int period)
     {
         var dateTimes = new List<DateTime>();
         var elements = new ObservableCollection<Element>();
@@ -54,7 +54,7 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
         {
             var items = _finances.Finance.Where(f => f.DateTime >= startDate && f.DateTime <= endDate)
                                          .Where(f => f.DateTime.DayOfWeek == i)
-                                         .SelectMany(f => f.Elements)
+                                         .SelectMany(f => f.Elements.Where(e => e.Mode == mode))
                                          .ToObservableCollection();      
 
             dateTimes.Add(DateTime.Now.AddDays(-(6 - (double)(i)) - period));
@@ -65,22 +65,22 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
             }
         }
 
-        return grouper.Group(elements);
+        return grouper.Group(elements).Result;
     }
 
-    public Task<ObservableCollection<Element>> GetByYear(Mode mode, DateTime date, int period)
+    public async Task<(ObservableCollection<Element>, List<DateTime>)> GetByYear(Mode mode, DateTime date, int period)
     {
         var dateTimes = new List<DateTime>();
 
-        var startDate = DateTime.Now.AddYears(-1 - period);
-        var endDate = DateTime.Now.AddYears(-period);
+        var startDate = DateTime.Now.AddYears(-1 + period);
+        var endDate = DateTime.Now.AddYears(period);
 
         var elements = _finances.Finance.Where(x => x.DateTime >= startDate && x.DateTime <= endDate)
-                                        .SelectMany(f => f.Elements)
+                                        .SelectMany(f => f.Elements.Where(e => e.Mode == mode))
                                         .ToObservableCollection();
         dateTimes.Add(endDate);
 
-        return grouper.Group(elements);
+        return (await grouper.Group(elements), dateTimes);
     }
 }
 
