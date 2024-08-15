@@ -23,15 +23,15 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
     {
         var elements = _finances.Finance.SelectMany(f => f.Elements.Where(e => e.Mode == mode)).ToObservableCollection();
 
-        return grouper.Group(elements).Result;
+        return grouper.Group(elements);
     }
 
-    public ObservableCollection<Element> GetByMonth(Mode mode, DateTime date, int period)
+    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByMonth(Mode mode, DateTime date, int period)
     {
         var dateTimes = new List<DateTime>();
 
-        var startDate = DateTime.Now.AddMonths(-1 - period);
-        var endDate = DateTime.Now.AddMonths(-period);
+        var startDate = DateTime.Now.AddMonths(-1 + period);
+        var endDate = DateTime.Now.AddMonths(period);
 
         var elements = _finances.Finance.Where(f => f.DateTime >= startDate && f.DateTime <= endDate)
                                         .SelectMany(f => f.Elements.Where(e => e.Mode == mode))
@@ -39,16 +39,16 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
 
         dateTimes.Add(endDate);
 
-        return grouper.Group(elements).Result;
+        return Task.FromResult((grouper.Group(elements), dateTimes));
     }
 
-    public ObservableCollection<Element> GetByWeek(Mode mode, DateTime date, int period)
+    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByWeek(Mode mode, DateTime date, int period)
     {
         var dateTimes = new List<DateTime>();
         var elements = new ObservableCollection<Element>();
 
-        var startDate = DateTime.Now.AddDays(-7 - period);
-        var endDate = DateTime.Now.AddDays(-period);
+        var startDate = DateTime.Now.AddDays(-7 + period);
+        var endDate = DateTime.Now.AddDays(period);
 
         for (DayOfWeek i = DayOfWeek.Sunday; (int)i < 7; i++)
         {
@@ -57,7 +57,7 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
                                          .SelectMany(f => f.Elements.Where(e => e.Mode == mode))
                                          .ToObservableCollection();      
 
-            dateTimes.Add(DateTime.Now.AddDays(-(6 - (double)(i)) - period));
+            dateTimes.Add(DateTime.Now.AddDays(-(6 - (double)(i)) + period));
 
             if (items.Count > 0)
             {
@@ -65,10 +65,10 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
             }
         }
 
-        return grouper.Group(elements).Result;
+        return Task.FromResult((grouper.Group(elements), dateTimes));
     }
 
-    public async Task<(ObservableCollection<Element>, List<DateTime>)> GetByYear(Mode mode, DateTime date, int period)
+    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByYear(Mode mode, DateTime date, int period)
     {
         var dateTimes = new List<DateTime>();
 
@@ -80,13 +80,18 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
                                         .ToObservableCollection();
         dateTimes.Add(endDate);
 
-        return (await grouper.Group(elements), dateTimes);
+        return Task.FromResult((grouper.Group(elements), dateTimes));
+    }
+
+    public Task<decimal> GetSum(ObservableCollection<Element> elements)
+    {
+        return Task.FromResult(elements.Sum(e => e.Sum));
     }
 }
 
 public class ElementGrouper
 {
-    public Task<ObservableCollection<Element>> Group(ObservableCollection<Element> elements)
+    public ObservableCollection<Element> Group(ObservableCollection<Element> elements)
     {
         var finalGroup = new ObservableCollection<Element>();
         // Сгруппировать элементы по заголовку
@@ -114,6 +119,6 @@ public class ElementGrouper
                 finalGroup.Add(data);
             }
         }
-        return Task.FromResult(finalGroup);
+        return finalGroup;
     }
 }

@@ -18,9 +18,13 @@ public class StatisticCostsViewModel
 {
     public StatisticCostsViewModel(IGroupRepository groupRepository)
     {
-        AllTimeViewModel = new StatisticAllTimeViewModel(Mode.Cost, groupRepository);
-        YearViewModel = new StatisticYearViewModel(Mode.Cost, groupRepository);
+        OverallStatistics = new OverallStatisticsViewModel(Mode.Cost, groupRepository);
+        AnnualStatistics = new AnnualStatisticsViewModel(Mode.Cost, groupRepository);
+        MonthlyStatistics = new MonthlyStatisticsViewModel(Mode.Cost, groupRepository);
+        WeeklyStatistics = new WeeklyStatisticsViewModel(Mode.Cost, groupRepository);
     }
-    public StatisticAllTimeViewModel AllTimeViewModel { get; }
-    public StatisticYearViewModel YearViewModel { get; }
+    public OverallStatisticsViewModel OverallStatistics { get; }
+    public AnnualStatisticsViewModel AnnualStatistics { get; }
+    public MonthlyStatisticsViewModel MonthlyStatistics { get; }
+    public WeeklyStatisticsViewModel WeeklyStatistics { get; }
 }

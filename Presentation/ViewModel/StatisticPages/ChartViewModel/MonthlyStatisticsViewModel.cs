@@ -1,66 +1,69 @@
 ﻿using Data.Interfaces;
-using Microcharts;
 using Model.Enum;
+using Microcharts;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.StatisticPages.ChartViewModel;
 
-public class StatisticAllTimeViewModel : INotifyPropertyChanged
+public class MonthlyStatisticsViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private readonly IGroupRepository _groupRepository;
+    private readonly Mode _mode;
 
     private Chart chart;
     private string period;
+    private string resultSum;
+    private List<DateTime> dateTimes;
     private ObservableCollection<Element> elements;
+    private int dateOffset;
 
-    public StatisticAllTimeViewModel(Mode mode, IGroupRepository groupRepository)
+    public MonthlyStatisticsViewModel(Mode mode, IGroupRepository groupRepository)
     {
         _groupRepository = groupRepository;
+        _mode = mode;
 
-        Elements = _groupRepository.GetByAllTime(mode);
+        OnForwardPeriod = new Command(async _ => await Forward());
+        OnBackPeriod = new Command(async _ => await Back());
 
-        Print();
+        UpdateItems();
     }
 
     public ObservableCollection<Element> Elements
-    { 
+    {
         get => elements;
         set
-        {
-            elements = value;
-            OnPropertyChanged();
-}
+        { elements = value; OnPropertyChanged(); }
     }
-    public string Period 
-    { 
-        get => period = "Весь период";
+
+    public string Period
+    {
+        get => period;
         set
-        {
-            period = value;
-            OnPropertyChanged();
-        }
+        { period = value; OnPropertyChanged(); }
     }
-    public Chart ChartViewAll
+
+    public string ResultSum
+    {
+        get => resultSum;
+        set
+        { resultSum = value; OnPropertyChanged(); }
+    }
+    public Chart ChartViewYear
     {
         get => chart;
         set
-        {
-            chart = value;
-            OnPropertyChanged();
-        }
+        { chart = value; OnPropertyChanged(); }
     }
+
+    public ICommand OnForwardPeriod { get; }
+    public ICommand OnBackPeriod { get; }
 
     private List<ChartEntry> SetEntries()
     {
@@ -84,7 +87,7 @@ public class StatisticAllTimeViewModel : INotifyPropertyChanged
     {
         List<ChartEntry> entries = SetEntries();
 
-        ChartViewAll = new DonutChart()
+        ChartViewYear = new DonutChart()
         {
             Entries = entries,
             LabelTextSize = 35,
@@ -93,6 +96,31 @@ public class StatisticAllTimeViewModel : INotifyPropertyChanged
         OnPropertyChanged();
 
         return;
+    }
+
+    private async Task Forward()
+    {
+        if (dateOffset == 0)
+            return;
+
+        dateOffset++;
+        await UpdateItems();
+    }
+
+    private async Task Back()
+    {
+        dateOffset--;
+
+        await UpdateItems();
+    }
+
+
+    private async Task UpdateItems()
+    {
+        (Elements, dateTimes) = await _groupRepository.GetByMonth(_mode, default, dateOffset);
+        Period = $"{dateTimes.First():Y}";
+        ResultSum = $"Общая сумма: {await _groupRepository.GetSum(Elements)} руб.";
+        Print();
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

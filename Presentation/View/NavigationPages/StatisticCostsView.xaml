@@ -10,7 +10,7 @@
     <Grid Margin="30,10,30,30">
         <t:SfTabView IndicatorBackground="#65826A" Grid.Row="0">
             <t:SfTabView.Items>
-                <t:SfTabItem x:Name="tabItemAll" Header="Весь срок" BindingContext="{Binding AllTimeViewModel}">
+                <t:SfTabItem x:Name="tabItemAll" Header="Весь срок" BindingContext="{Binding OverallStatistics}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -18,10 +18,10 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid Margin="0,20,0,0" Grid.Row="0">
-                            <Label x:Name="labelTitle" Text="Общая сумма:" 
+                            <Label x:Name="labelTitle" Text="{Binding OverallStatistics.ResultSum}" 
                                    FontSize="22" FontAttributes="Bold" TextColor="Black" 
                                    HorizontalOptions="CenterAndExpand" />
-                            <micro:ChartView x:Name="chartViewAll" Margin="0,40,0,0" Chart="{Binding AllTimeViewModel.ChartViewAll}" HeightRequest="250" Grid.Row="0"/>
+                            <micro:ChartView Margin="0,40,0,0" Chart="{Binding OverallStatistics.ChartViewAll}" HeightRequest="250" Grid.Row="0"/>
                         </Grid>
                         <!--<Grid Margin="0,10,0,0" Grid.Row="1">
                             <Grid Grid.Column="0">
@@ -40,7 +40,7 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="5"/>
                                 </Border.StrokeShape>
-                                <CollectionView ItemsSource="{Binding AllTimeViewModel.Elements}" BackgroundColor="#8AAD90">
+                                <CollectionView ItemsSource="{Binding OverallStatistics.Elements}" BackgroundColor="#8AAD90">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
                                             <SwipeView>
@@ -71,7 +71,7 @@
                     </Grid>
                 </t:SfTabItem>
 
-                <t:SfTabItem x:Name="tabItemYear" Header="Год" BindingContext="{Binding YearViewModel}">
+                <t:SfTabItem x:Name="tabItemYear" Header="Год" BindingContext="{Binding AnnualStatistics}">
                     <Grid>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -80,20 +80,20 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Margin="0,20,0,0" Grid.Row="0">
-                                <Label Text="{Binding YearViewModel.ResultSum}" 
+                                <Label Text="{Binding AnnualStatistics.ResultSum}" 
                                        FontSize="22" FontAttributes="Bold" TextColor="Black" 
                                        HorizontalOptions="CenterAndExpand" />
-                                <micro:ChartView x:Name="chartViewYear" Margin="0,40,0,0" Chart="{Binding YearViewModel.ChartViewYear}" HeightRequest="250" Grid.Row="0"/>
+                                <micro:ChartView Margin="0,40,0,0" Chart="{Binding AnnualStatistics.ChartViewYear}" HeightRequest="250" Grid.Row="0"/>
                             </Grid>
                             <Grid Margin="0,10,0,0" Grid.Row="1">
                                 <Grid Grid.Column="0">
-                                    <Button Text="← Назад" Command="{Binding YearViewModel.OnBackPeriod}"  TextColor="White" BackgroundColor="#ADADAD"  HorizontalOptions="Start" WidthRequest="100"/>
+                                    <Button Text="← Назад" Command="{Binding AnnualStatistics.OnBackPeriod}"  TextColor="White" BackgroundColor="#ADADAD"  HorizontalOptions="Start" WidthRequest="100"/>
                                 </Grid>
                                 <Grid Grid.Column="1">
-                                    <Label Text="{Binding YearViewModel.Period}" FontSize="14" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                                    <Label Text="{Binding AnnualStatistics.Period}" FontSize="14" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center"></Label>
                                 </Grid>
                                 <Grid Grid.Column="2">
-                                    <Button Text="Далее →" Command="{Binding YearViewModel.OnForwardPeriod}" TextColor="White"  BackgroundColor="#ADADAD" HorizontalOptions="End" WidthRequest="100"/>
+                                    <Button Text="Далее →" Command="{Binding AnnualStatistics.OnForwardPeriod}" TextColor="White"  BackgroundColor="#ADADAD" HorizontalOptions="End" WidthRequest="100"/>
                                 </Grid>
                             </Grid>
                             <Grid Padding="0" Margin="0,30,0,0" Grid.Row="2">
@@ -101,7 +101,7 @@
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="5"/>
                                     </Border.StrokeShape>
-                                    <CollectionView ItemsSource="{Binding YearViewModel.Elements}" BackgroundColor="#8AAD90">
+                                    <CollectionView ItemsSource="{Binding AnnualStatistics.Elements}" BackgroundColor="#8AAD90">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate>
                                                 <SwipeView>
@@ -133,15 +133,127 @@
                     </Grid>
                 </t:SfTabItem>
 
-                <t:SfTabItem Header="Месяц">
+                <t:SfTabItem Header="Месяц" BindingContext="{Binding MonthlyStatistics}">
                     <Grid>
-                        <micro:ChartView x:Name="chartViewMonth" HeightRequest="250"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="0,20,0,0" Grid.Row="0">
+                                <Label Text="{Binding MonthlyStatistics.ResultSum}" 
+                                       FontSize="22" FontAttributes="Bold" TextColor="Black" 
+                                       HorizontalOptions="CenterAndExpand" />
+                                <micro:ChartView Margin="0,40,0,0" Chart="{Binding MonthlyStatistics.ChartViewYear}" HeightRequest="250" Grid.Row="0"/>
+                            </Grid>
+                            <Grid Margin="0,10,0,0" Grid.Row="1">
+                                <Grid Grid.Column="0">
+                                    <Button Text="← Назад" Command="{Binding MonthlyStatistics.OnBackPeriod}"  TextColor="White" BackgroundColor="#ADADAD"  HorizontalOptions="Start" WidthRequest="100"/>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Label Text="{Binding MonthlyStatistics.Period}" FontSize="14" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Button Text="Далее →" Command="{Binding MonthlyStatistics.OnForwardPeriod}" TextColor="White"  BackgroundColor="#ADADAD" HorizontalOptions="End" WidthRequest="100"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Padding="0" Margin="0,30,0,0" Grid.Row="2">
+                                <Border Stroke="#8AAD90" BackgroundColor="#8AAD90">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5"/>
+                                    </Border.StrokeShape>
+                                    <CollectionView ItemsSource="{Binding MonthlyStatistics.Elements}" BackgroundColor="#8AAD90">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <SwipeView>
+                                                    <Grid Padding="15" HeightRequest="70">
+                                                        <HorizontalStackLayout>
+                                                            <Grid>
+                                                                <Border Stroke="{Binding Categoria.Color}" BackgroundColor="{Binding Categoria.Color}" HeightRequest="40" WidthRequest="40">
+                                                                    <Border.StrokeShape>
+                                                                        <RoundRectangle CornerRadius="5"/>
+                                                                    </Border.StrokeShape>
+
+                                                                    <Image Source="{Binding Categoria.Icon}" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="20" HeightRequest="20"/>
+                                                                </Border>
+                                                            </Grid>
+                                                            <Label Text="{Binding Categoria.Name}" FontSize="15" Padding="10" TextColor="White" HorizontalOptions="Center" />
+                                                        </HorizontalStackLayout>
+                                                        <HorizontalStackLayout HorizontalOptions="End" Padding="10">
+                                                            <Label Text="{Binding Sum}" TextColor="White" FontSize="15" HorizontalOptions="End"/>
+                                                            <Label Text=" руб." FontSize="15" TextColor="White" Margin="0,0,-10,0" HorizontalOptions="End"/>
+                                                        </HorizontalStackLayout>
+                                                    </Grid>
+                                                </SwipeView>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </Border>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </t:SfTabItem>
 
-                <t:SfTabItem Header="Неделя">
+                <t:SfTabItem Header="Неделя" BindingContext="{Binding WeeklyStatistics}">
                     <Grid>
-                        <micro:ChartView x:Name="chartViewWeek" HeightRequest="250"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Margin="0,20,0,0" Grid.Row="0">
+                                <Label Text="{Binding WeeklyStatistics.ResultSum}" 
+                                       FontSize="22" FontAttributes="Bold" TextColor="Black" 
+                                       HorizontalOptions="CenterAndExpand" />
+                                <micro:ChartView Margin="0,40,0,0" Chart="{Binding WeeklyStatistics.ChartViewYear}" HeightRequest="250" Grid.Row="0"/>
+                            </Grid>
+                            <Grid Margin="0,10,0,0" Grid.Row="1">
+                                <Grid Grid.Column="0">
+                                    <Button Text="← Назад" Command="{Binding WeeklyStatistics.OnBackPeriod}"  TextColor="White" BackgroundColor="#ADADAD"  HorizontalOptions="Start" WidthRequest="100"/>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Label Text="{Binding WeeklyStatistics.Period}" FontSize="14" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Button Text="Далее →" Command="{Binding WeeklyStatistics.OnForwardPeriod}" TextColor="White"  BackgroundColor="#ADADAD" HorizontalOptions="End" WidthRequest="100"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Padding="0" Margin="0,30,0,0" Grid.Row="2">
+                                <Border Stroke="#8AAD90" BackgroundColor="#8AAD90">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5"/>
+                                    </Border.StrokeShape>
+                                    <CollectionView ItemsSource="{Binding WeeklyStatistics.Elements}" BackgroundColor="#8AAD90">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <SwipeView>
+                                                    <Grid Padding="15" HeightRequest="70">
+                                                        <HorizontalStackLayout>
+                                                            <Grid>
+                                                                <Border Stroke="{Binding Categoria.Color}" BackgroundColor="{Binding Categoria.Color}" HeightRequest="40" WidthRequest="40">
+                                                                    <Border.StrokeShape>
+                                                                        <RoundRectangle CornerRadius="5"/>
+                                                                    </Border.StrokeShape>
+
+                                                                    <Image Source="{Binding Categoria.Icon}" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="20" HeightRequest="20"/>
+                                                                </Border>
+                                                            </Grid>
+                                                            <Label Text="{Binding Categoria.Name}" FontSize="15" Padding="10" TextColor="White" HorizontalOptions="Center" />
+                                                        </HorizontalStackLayout>
+                                                        <HorizontalStackLayout HorizontalOptions="End" Padding="10">
+                                                            <Label Text="{Binding Sum}" TextColor="White" FontSize="15" HorizontalOptions="End"/>
+                                                            <Label Text=" руб." FontSize="15" TextColor="White" Margin="0,0,-10,0" HorizontalOptions="End"/>
+                                                        </HorizontalStackLayout>
+                                                    </Grid>
+                                                </SwipeView>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </Border>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </t:SfTabItem>
             </t:SfTabView.Items>
