@@ -9,10 +9,10 @@ public class IconBuilder : IIconBuilder
 {
     public IconBuilder()
     {
-        Icon = new Icon();
+        Model = new IconModel();
         ColorUpdater = new ColorUpdater();
     }
-    public Icon Icon { get; set; }
+    public IconModel Model { get; set; }
     public IColorUpdater ColorUpdater { get; private set; }
     public Categoria? PreviousSelectedItem { get; private set; }
     public Categoria? SelectedItem { get; private set; }

@@ -4,8 +4,10 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Data.Interfaces;
 using Model.Enum;
+using Model.FinanceModel;
 using Presentation.ViewModel.Builders.FinanceBuilder;
 using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
+using Presentation.ViewModel.Builders.PageBuilder;
 using Presentation.ViewModel.Builders.PageBuilder.Interface;
 using Presentation.ViewModel.MainPages.Intrerfaces;
 using Element = Model.DataModel.Element;
@@ -20,8 +22,7 @@ public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
     private readonly IDateChangeBuilder _dateChange;
     private readonly IOpenPageBuilder _openPage;
 
-    private ObservableCollection<Element>? elements;
-    private string? elementsSum;
+    FinanceModel model = new FinanceModel();
 
     public MainCostsViewModel(DateTime date, IFinanceRepository financeRepository)
     {
@@ -44,20 +45,20 @@ public class MainCostsViewModel : INotifyPropertyChanged, IFinanceViewModel
 
     public ObservableCollection<Element> Elements
     {
-        get => elements!;
+        get => model.Elements!;
         set
         {
-            elements = value;
+            model.Elements = value;
             OnPropertyChanged();
         }
     }
 
     public string ElementsSum
     {
-        get => elementsSum!;
+        get => model.ElementsSum!;
         set
         {
-            elementsSum = value;
+            model.ElementsSum = value;
             OnPropertyChanged(); 
         }
     }

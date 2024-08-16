@@ -1,116 +1,62 @@
 ﻿using Data.Interfaces;
 using Microcharts;
+using Model.ChartModel;
 using Model.Enum;
-using SkiaSharp;
-using System;
-using System.Collections.Generic;
+using Presentation.ViewModel.Builders.StatisticBuilder;
+using Presentation.ViewModel.StatisticPages.ChartViewModel.Interfaces;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.StatisticPages.ChartViewModel;
 
-public class OverallStatisticsViewModel : INotifyPropertyChanged
+public class OverallStatisticsViewModel : INotifyPropertyChanged, IPeriodStatisticViewModel
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private readonly IGroupRepository _groupRepository;
-    private readonly Mode _mode;
+    private Chart? chart;
 
-    private Chart chart;
-    private string period;
-    private string resultSum;
-    private ObservableCollection<Element> elements;
+    private StatisticModel model = new StatisticModel();
+    private ChartBuilder printChart = new ChartBuilder();
 
     public OverallStatisticsViewModel(Mode mode, IGroupRepository groupRepository)
     {
-        _groupRepository = groupRepository;
-        _mode = mode;
+        GroupRepository = groupRepository;
+        Mode = mode;
 
         UpdateItems();
     }
 
     public ObservableCollection<Element> Elements
     { 
-        get => elements;
+        get => model.Elements!;
         set
-        {
-            elements = value;
-            OnPropertyChanged();
-}
-    }
-
-    public string Period
-    { 
-        get => period;
-        set
-        {
-            period = value;
-            OnPropertyChanged();
-        }
+        { model.Elements = value; OnPropertyChanged(); }
     }
 
     public string ResultSum
     {
-        get => resultSum;
+        get => model.ResultSum!;
         set
-        { resultSum = value; OnPropertyChanged(); }
+        { model.ResultSum = value; OnPropertyChanged(); }
     }
 
     public Chart ChartViewAll
     {
-        get => chart;
+        get => chart!;
         set
-        {
-            chart = value;
-            OnPropertyChanged();
-        }
+        { chart = value; OnPropertyChanged(); }
     }
 
-    private List<ChartEntry> SetEntries()
+    public IGroupRepository GroupRepository { get; set ; }
+    public Mode Mode { get; set; }
+
+    private async void UpdateItems()
     {
-        List<ChartEntry> entries = [];
-        var items = Elements;
-
-        foreach (var item in items)
-        {
-            entries.Add(new ChartEntry(Convert.ToInt32(item.Sum))
-            {
-                Label = item.Categoria!.Name,
-                ValueLabel = item.Sum.ToString(),
-                Color = SKColor.Parse(item.Categoria.Color),
-            });
-        }
-
-        return entries;
-    }
-
-    public void Print()
-    {
-        List<ChartEntry> entries = SetEntries();
-
-        ChartViewAll = new DonutChart()
-        {
-            Entries = entries,
-            LabelTextSize = 35,
-            BackgroundColor = SKColor.Parse("#FAFAFA"),
-        };
-        OnPropertyChanged();
-
-        return;
-    }
-
-    private async Task UpdateItems()
-    {
-        Elements = _groupRepository.GetByAllTime(_mode);
-        Period = "Общий отчет";
-        resultSum = $"Общая сумма: {await _groupRepository.GetSum(Elements)} руб.";
-        Print();
+        Elements = GroupRepository.GetByAllTime(Mode);
+        ResultSum = $"Общая сумма: {await GroupRepository.GetSum(Elements)} руб.";
+        ChartViewAll = printChart.Print(Elements);
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

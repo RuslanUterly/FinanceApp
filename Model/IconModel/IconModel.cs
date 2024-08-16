@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Model.IconModel;
 
-public class Icon
+public class IconModel
 {
     public ObservableCollection<Categoria> IconCosts { get; set; } = new ObservableCollection<Categoria>
     {

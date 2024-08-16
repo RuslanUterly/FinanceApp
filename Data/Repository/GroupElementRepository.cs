@@ -3,13 +3,7 @@ using Data.Extensions;
 using Data.Interfaces;
 using Model.DataModel;
 using Model.Enum;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Data.Repository;
 
@@ -26,7 +20,7 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
         return grouper.Group(elements);
     }
 
-    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByMonth(Mode mode, DateTime date, int period)
+    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByMonth(Mode mode, int period)
     {
         var dateTimes = new List<DateTime>();
 
@@ -42,7 +36,7 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
         return Task.FromResult((grouper.Group(elements), dateTimes));
     }
 
-    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByWeek(Mode mode, DateTime date, int period)
+    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByWeek(Mode mode, int period)
     {
         var dateTimes = new List<DateTime>();
         var elements = new ObservableCollection<Element>();
@@ -68,7 +62,7 @@ public class GroupElementRepository(DataFinanceContext finance) : IGroupReposito
         return Task.FromResult((grouper.Group(elements), dateTimes));
     }
 
-    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByYear(Mode mode, DateTime date, int period)
+    public Task<(ObservableCollection<Element>, List<DateTime>)> GetByYear(Mode mode, int period)
     {
         var dateTimes = new List<DateTime>();
 

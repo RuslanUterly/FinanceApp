@@ -1,9 +1,6 @@
-﻿using Data.Model;
-using Model.DataModel;
-using Model.DataModel.Dto;
+﻿using Model.DataModel;
 using Model.Enum;
 using System.Collections.ObjectModel;
-using System.Data;
 
 namespace Data.Interfaces;
 

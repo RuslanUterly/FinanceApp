@@ -1,6 +1,4 @@
-﻿using Model.DataModel;
-using Model.Enum;
-using Element = Model.DataModel.Element;
+﻿using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
 

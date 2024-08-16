@@ -1,8 +1,6 @@
-﻿using Data.Model;
-using Model.DataModel;
+﻿using Model.DataModel;
 using System.Collections.ObjectModel;
 using System.Text.Json;
-
 
 namespace Data.Data;
 
@@ -14,11 +12,9 @@ public class DataFinanceContext
     {
         Finance = GetItems();
     }
-    //public ObservableCollection<DataFinance> Finance => GetItems();
 
     public void UpdateItems()
     {
-//#if ANDROID
         var docsDirectory = Xamarin.Essentials.FileSystem.CacheDirectory;
         File.Delete(docsDirectory + $"/user.json");
 
@@ -26,13 +22,12 @@ public class DataFinanceContext
         {
             JsonSerializer.Serialize<ObservableCollection<DataFinance>>(fs, Finance);
         }
-//#endif
     }
 
     public ObservableCollection<DataFinance> GetItems()
     {
         ObservableCollection<DataFinance> finance = new ObservableCollection<DataFinance>();
-//#if ANDROID
+
         var docsDirectory = Xamarin.Essentials.FileSystem.CacheDirectory;
         using (FileStream fs = new FileStream($"{docsDirectory}/user.json", FileMode.OpenOrCreate))
         {
@@ -51,7 +46,7 @@ public class DataFinanceContext
                 }
             }
         }
-//#endif
+
         if (finance.Count == 0)
         {
             finance.Add(new DataFinance(DateTime.Now, new ObservableCollection<Element>()));
@@ -63,7 +58,7 @@ public class DataFinanceContext
     public ObservableCollection<DataFinance> GetItems(ObservableCollection<DataFinance> dataFinances)
     {
         ObservableCollection<DataFinance> finance = new ObservableCollection<DataFinance>();
-//#if ANDROID
+
         var docsDirectory = Xamarin.Essentials.FileSystem.CacheDirectory;
         using (FileStream fs = new FileStream($"{docsDirectory}/user.json", FileMode.OpenOrCreate))
         {
@@ -82,7 +77,7 @@ public class DataFinanceContext
                 }
             }
         }
-//#endif
+
         if (finance.Count == 0)
         {
             finance.Add(new DataFinance(DateTime.Now, new ObservableCollection<Element>()));

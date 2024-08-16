@@ -1,131 +1,84 @@
 ﻿using Data.Interfaces;
 using Microcharts;
+using Model.ChartModel;
 using Model.Enum;
+using Presentation.ViewModel.Builders.PageBuilder;
+using Presentation.ViewModel.Builders.PageBuilder.Interface;
+using Presentation.ViewModel.Builders.StatisticBuilder;
+using Presentation.ViewModel.StatisticPages.ChartViewModel.Interfaces;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Element = Model.DataModel.Element;
 
 namespace Presentation.ViewModel.StatisticPages.ChartViewModel;
 
-public class AnnualStatisticsViewModel : INotifyPropertyChanged
+public class AnnualStatisticsViewModel : INotifyPropertyChanged, IPeriodStatisticViewModel
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private readonly IGroupRepository _groupRepository;
-    private readonly Mode _mode;
+    private readonly IPeriodChanger _statisticChanger;
 
-    private Chart chart;
-    private string period;
-    private string resultSum;
-    private List<DateTime> dateTimes;
-    private ObservableCollection<Element> elements;
+    private Chart? chart;
+    private List<DateTime>? dateTimes;
     private int dateOffset;
+
+    private StatisticModel model = new StatisticModel();
+    private ChartBuilder printChart = new ChartBuilder();
 
     public AnnualStatisticsViewModel(Mode mode, IGroupRepository groupRepository)
     {
-        _groupRepository = groupRepository;
-        _mode = mode;
+        _statisticChanger = new PeriodChangeBuilder(mode, groupRepository, this);
+        _statisticChanger.StatisticView += UpdateItems;
 
-        OnForwardPeriod = new Command(async _ => await Forward());
-        OnBackPeriod = new Command(async _ => await Back());
+        OnForwardPeriod = new Command(async _ => await _statisticChanger.ForwardPeriod(ref dateOffset, 1));
+        OnBackPeriod = new Command(async _ => await _statisticChanger.BackPeriod(ref dateOffset, 1));
 
         UpdateItems();
     }
 
-    public ObservableCollection<Element> Elements 
-    { 
-        get => elements;
+    public ObservableCollection<Element> Elements
+    {
+        get => model.Elements!;
         set
-            { elements = value; OnPropertyChanged(); }
+        { model.Elements = value; OnPropertyChanged(); }
     }
 
     public string Period
     {
-        get => period;
-        set 
-            { period = value; OnPropertyChanged(); }
+        get => model.DatePeriod!;
+        set
+        { model.DatePeriod = value; OnPropertyChanged(); }
     }
 
-    public string ResultSum 
-    { 
-        get => resultSum; 
+    public string ResultSum
+    {
+        get => model.ResultSum!;
         set
-            { resultSum = value; OnPropertyChanged(); }
+        { model.ResultSum = value; OnPropertyChanged(); }
     }
+
     public Chart ChartViewYear
     {
-        get => chart;
+        get => chart!;
         set
             { chart = value; OnPropertyChanged(); }
     }
 
+    public IGroupRepository GroupRepository { get; set; }
+    public Mode Mode { get; set; }
+
     public ICommand OnForwardPeriod { get; }
     public ICommand OnBackPeriod { get; }
 
-    private List<ChartEntry> SetEntries()
-    {
-        List<ChartEntry> entries = [];
-        var items = Elements;
-
-        foreach (var item in items)
-        {
-            entries.Add(new ChartEntry(Convert.ToInt32(item.Sum))
-            {
-                Label = item.Categoria!.Name,
-                ValueLabel = item.Sum.ToString(),
-                Color = SKColor.Parse(item.Categoria.Color),
-            });
-        }
-
-        return entries;
-    }
-
-    public void Print()
-    {
-        List<ChartEntry> entries = SetEntries();
-
-        ChartViewYear = new DonutChart()
-        {
-            Entries = entries,
-            LabelTextSize = 35,
-            BackgroundColor = SKColor.Parse("#FAFAFA"),
-        };
-        OnPropertyChanged();
-
-        return;
-    }
-
-    private async Task Forward()
-    {
-        if (dateOffset == 0) 
-            return;
-
-        dateOffset++;
-        await UpdateItems();
-    }
-
-    private async Task Back()
-    {
-        dateOffset--;
-
-        await UpdateItems();
-    }
-
-
-    private async Task UpdateItems()
+    private async void UpdateItems()
     {      
-        (Elements, dateTimes) = await _groupRepository.GetByYear(_mode, default, dateOffset);
+        (Elements, dateTimes) = await GroupRepository.GetByYear(Mode, dateOffset);
         Period = $"{dateTimes.First():yyyy} г.";
-        ResultSum = $"Общая сумма: {await _groupRepository.GetSum(Elements)} руб.";
-        Print();
+        ResultSum = $"Общая сумма: {await GroupRepository.GetSum(Elements)} руб.";
+        ChartViewYear = printChart.Print(Elements);
     }
 
     public void OnPropertyChanged([CallerMemberName] string prop = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

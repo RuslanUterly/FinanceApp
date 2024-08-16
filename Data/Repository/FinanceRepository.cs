@@ -1,11 +1,8 @@
 ﻿using Data.Data;
 using Data.Extensions;
 using Data.Interfaces;
-using Data.Model;
 using Model.DataModel;
-using Model.DataModel.Dto;
 using Model.Enum;
-using System;
 using System.Collections.ObjectModel;
 
 namespace Data.Repository;
@@ -26,7 +23,7 @@ public class FinanceRepository(DataFinanceContext finance) : IFinanceRepository
                 bool isNewFinance = true;
                 foreach (var element in data.Elements!)
                 {
-                    if (element.Categoria.Name == categoria.Name && element.Mode == mode)
+                    if (element.Categoria!.Name == categoria.Name && element.Mode == mode)
                     {
                         Element el = element;
                         el.Sum += cash;

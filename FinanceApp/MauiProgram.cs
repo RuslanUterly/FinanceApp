@@ -37,7 +37,9 @@ public static class MauiProgram
                      .AddSingleton<MainCostsView>()
                      .AddSingleton<MainProfitView>()
                      .AddSingleton<StatisticCostsViewModel>()
-                     .AddSingleton<StatisticCostsView>();
+                     .AddSingleton<StatisticProfitViewModel>()
+                     .AddSingleton<StatisticCostsView>()
+                     .AddSingleton<StatisticProfitView>();
 
 #if DEBUG
         builder.Logging.AddDebug();

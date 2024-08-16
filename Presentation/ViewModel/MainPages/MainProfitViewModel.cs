@@ -7,8 +7,10 @@ using System.Collections.ObjectModel;
 using Data.Interfaces;
 using Element = Model.DataModel.Element;
 using Presentation.ViewModel.Builders.FinanceBuilder.Interfaces;
+using Presentation.ViewModel.Builders.PageBuilder;
 using Presentation.ViewModel.Builders.PageBuilder.Interface;
 using Presentation.ViewModel.Builders.FinanceBuilder;
+using Model.FinanceModel;
 
 namespace Presentation.ViewModel;
 
@@ -19,8 +21,7 @@ public class MainProfitViewModel : INotifyPropertyChanged, IFinanceViewModel
     private readonly IDateChangeBuilder _dateChange;
     private readonly IOpenPageBuilder _openPage;
 
-    private ObservableCollection<Element>? elements;
-    private string? elementsSum;
+    FinanceModel model = new FinanceModel();
 
     public MainProfitViewModel(DateTime date, IFinanceRepository financeRepository)
     {
@@ -43,20 +44,20 @@ public class MainProfitViewModel : INotifyPropertyChanged, IFinanceViewModel
 
     public ObservableCollection<Element> Elements
     {
-        get => elements!;
+        get => model.Elements!;
         set
         {
-            elements = value;
+            model.Elements = value;
             OnPropertyChanged();
         }
     }
 
     public string ElementsSum
     {
-        get => elementsSum!;
+        get => model.ElementsSum!;
         set
         {
-            elementsSum = value;
+            model.ElementsSum = value;
             OnPropertyChanged();
         }
     }

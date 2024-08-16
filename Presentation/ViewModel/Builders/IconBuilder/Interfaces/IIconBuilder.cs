@@ -6,7 +6,7 @@ namespace Presentation.ViewModel.Builders.IconBuilder.Interfaces;
 
 public interface IIconBuilder
 {
-    Icon Icon { get; set; }
+    IconModel Model { get; set; }
     Categoria? PreviousSelectedItem { get; }
     Categoria? SelectedItem { get; }
     Task ChangeAsync(object sender, ObservableCollection<Categoria> IconCosts);

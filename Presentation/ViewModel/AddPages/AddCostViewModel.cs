@@ -33,10 +33,10 @@ public class AddCostViewModel : INotifyPropertyChanged
 
     public ObservableCollection<Categoria> IconCosts
     {
-        get => _iconBuilder.Icon.IconCosts;
+        get => _iconBuilder.Model.IconCosts;
         set
         {
-            _iconBuilder.Icon.IconCosts = value;
+            _iconBuilder.Model.IconCosts = value;
             OnPropertyChanged();
         }
     }

@@ -1,8 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Data.Data;
-using Data.Interfaces;
-using Data.Repository;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Data.Extensions;
 
