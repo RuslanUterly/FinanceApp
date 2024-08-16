@@ -2,10 +2,6 @@
 using Android.Content.PM;
 using Android.Graphics.Drawables;
 using Android.OS;
-using Android.Views;
-using AndroidX.Navigation;
-using Google.Android.Material.Navigation;
-using Google.Android.Material.Tabs;
 using Microsoft.Maui.Platform;
 
 namespace FinanceApp;
@@ -19,8 +15,6 @@ public class MainActivity : MauiAppCompatActivity
 
         Window?.SetStatusBarColor(Color.FromRgba("FAFAFA").ToPlatform());
         Window?.SetNavigationBarColor(Color.FromRgba("F7F7F7").ToPlatform());
-        Window?.SetBackgroundDrawable(new ColorDrawable(Color.FromRgba("#FAFAFA").ToPlatform()));
-
-        
+        Window?.SetBackgroundDrawable(new ColorDrawable(Color.FromRgba("#FAFAFA").ToPlatform())); 
     }
 }

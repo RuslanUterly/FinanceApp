@@ -1,8 +1,6 @@
 ﻿using Android.Content.Res;
-using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Views;
-using Android.Widget;
 using Google.Android.Material.BottomNavigation;
 using Google.Android.Material.Tabs;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
@@ -10,7 +8,6 @@ using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Controls.Platform.Compatibility;
 using Microsoft.Maui.Platform;
 using ShellItem = Microsoft.Maui.Controls.ShellItem;
-using AndroidApp = Android.App.Application;
 using Color = Microsoft.Maui.Graphics.Color;
 
 namespace FinanceApp.Platforms.Android;

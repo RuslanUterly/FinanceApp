@@ -3,13 +3,4 @@
     <color name="colorPrimary">#F7F7F7</color>
     <color name="colorPrimaryDark">#FAFAFA</color>
     <color name="colorAccent">#8AAD90</color>
-
-
-	<style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-		<item name="android:colorBackground">#F7F7F7</item>
-	</style>
-
-	<style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
-		<item name="android:textSize">10px</item>
-	</style>
 </resources>
