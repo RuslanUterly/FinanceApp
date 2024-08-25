@@ -11,7 +11,6 @@ public class FinanceRepository(DataFinanceContext finance) : IFinanceRepository
 {
     public readonly DataFinanceContext _finances = finance;
 
-
     public Task Create(Mode mode, decimal cash, Categoria categoria, DateTime date)
     {
         if (!_finances.Finance.Any(f => f.DateTime.Date == date.Date)) 
