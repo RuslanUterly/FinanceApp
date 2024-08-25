@@ -68,7 +68,7 @@ public class FinanceRepository(DataFinanceContext finance) : IFinanceRepository
 
     public Task Update(DataFinance data)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 
     public Task<decimal> GetSum(DateTime date, Mode mode)
